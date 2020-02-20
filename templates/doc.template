@@ -1,0 +1,33 @@
+---
+title: "{{.title}}"
+date: {{now}}
+draft: false
+
+---
+
+## {{.head}}
+
+{{.head_content}}
+
+{{- range $x :=.sections }}
+
+### {{$x.title}}
+
+{{$x.content}}
+
+{{- range $ref :=.refs }}
+##### ref: {{$ref.title}}
+
+```
+{{$ref.link |filecontent|indent 4}}
+```
+{{- end}}
+
+{{- end}}
+
+### Other references:
+{{ with .related }}
+{{- range $ref :=.refs }}
+{{$ref.title}}: {{$ref.link}}
+{{- end}}
+{{ end }}

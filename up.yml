@@ -37,3 +37,17 @@ tasks:
       #       run the test and output the result to a tmp file to be included into markdown reference as log
       #   do:
       #     - echo "hello"
+      #
+  -
+    name: test
+    task:
+
+      -
+        func: shell
+        desc: read file and get doc_meta as object
+        vars:
+          yml_path: '{{.upproj_dir}}/tests/functests'
+          yml_file: c0083.yml
+        do:
+          - 'cd {{.upproj_dir}}/tests/functests; ls c????.yml'
+        reg: cases

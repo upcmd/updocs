@@ -1,8 +1,0 @@
----
-title: "{{.showcase.number}}"
-draft: false
----
-
-{{range $case:=.showcase.items}}
-{{$case}}
-{{end}}
