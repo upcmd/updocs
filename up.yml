@@ -3,7 +3,8 @@ version: 1.0.0
 vars:
   cached_functests_dir: ./build/functests
   cases_dir: ./build/cases
-  content_dir: ./testcontent
+  log_dir: ./reflogs
+  content_dir: ./content
 
 dvars:
   - name: upproj_dir
@@ -12,6 +13,9 @@ dvars:
 
   - name: src_functests_dir
     value: '{{.upproj_dir}}/tests/functests-mock'
+
+  - name: ref_dir
+    value: '{{.cached_functests_dir}}'
 
 tasks:
   -
@@ -57,7 +61,6 @@ tasks:
           - rm -rf {{.cases_dir}}
           - mkdir -p {{.cases_dir}}
 
-
       # -
       #   func: shell
       #   desc: get the cases object
@@ -86,6 +89,13 @@ tasks:
           - process_case
         loop: "caselist"
 
+
+      -
+        func: shell
+        desc: copy generated docs to publish dir
+        do:
+          - 'cp -rf {{.cases_dir}} {{.content_dir}}/'
+
   -
     name: process_case
     task:
@@ -113,39 +123,68 @@ tasks:
               yml file content:
               {{.caseyml}}
 
-          - name: to_object
-            cmd:
-              src: caseyml
-              reg: caseobj
+          # - name: reg
+          #   cmd:
+          #     name: casedoc
+          #     value: '{{.caseyml}}'
+      #
 
-          - name: printobj
-            cmd: caseobj
+          # - name: to_object
+          #   cmd:
+          #     src: caseyml
+          #     reg: caseobj
+          #
+          # - name: printobj
+          #   cmd: caseobj
 
-          - name: pause
 
           # TODO: add printobj_by_key
           # - name: printobj
           #   cmd: '{{.caseobj.doc_meta}}'
 
-          - name: to_object
-            cmd:
-              src: '{{.caseobj.doc_meta}}'
-              reg: docobj
+          # - name: to_object
+          #   cmd:
+          #     src: '{{.caseobj.doc_meta}}'
+          #     reg: docobj
 
           # - name: reg
           #   cmd:
           #     name: docobj
           #     value: '{{.caseobj.doc_meta}}'
 
+          - name: query
+            cmd:
+              ymlkey: caseyml
+              path: doc_meta.
+              ymlonly: true
+              reg: docyml
+
+      -
+        func: cmd
+        dvars:
+          - name: casedoc
+            value: '{{.docyml}}'
+            expand: 2
+            flags: [to_object]
+
+        do:
+          - name: print
+            cmd: |
+              casedoc content:
+              {{.casedoc}}
+
           - name: printobj
-            cmd: docobj
+            cmd: casedoc_object
+
+          # - name: exit
 
           - name: template
             desc: generate the document
             cmd:
               src: ./templates/doc.template
               dest: '{{.cases_dir}}/{{.casename | replace ".yml" ""}}.md'
-              data: '{{.docobj}}'
+              datakey: casedoc_object
+          # - name: pause
 
       # -
       #   func: shell
