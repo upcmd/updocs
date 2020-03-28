@@ -61,27 +61,6 @@ tasks:
           - rm -rf {{.cases_dir}}
           - mkdir -p {{.cases_dir}}
 
-      # -
-      #   func: shell
-      #   desc: get the cases object
-      #   do:
-      #     - |
-      #       {{ range $idx, $file := .cases | splitLines -}}
-      #       {{$casename :=  $file | replace ".yml" ""}}
-      #       echo "==========failure case test {{$idx |add1}}==============="
-      #       {{end}}
-
-      # -
-      #   func: shell
-      #   desc: |-
-      #     loop through c*.yml case file:
-      #       parse the docs element to get the doc object using dvar ref
-      #       loop through head and content items
-      #       form the required object the markdown template page requires
-      #       run the test and output the result to a tmp file to be included into markdown reference as log
-      #   do:
-      #     - echo "hello"
-
       -
         func: call
         desc: filter out all cases have already got documents
@@ -89,11 +68,11 @@ tasks:
           - process_case
         loop: "caselist"
 
-
       -
         func: shell
         desc: copy generated docs to publish dir
         do:
+          - rm -rf {{.cases_dir}}/cases
           - 'cp -rf {{.cases_dir}} {{.content_dir}}/'
 
   -
@@ -123,35 +102,6 @@ tasks:
               yml file content:
               {{.caseyml}}
 
-          # - name: reg
-          #   cmd:
-          #     name: casedoc
-          #     value: '{{.caseyml}}'
-      #
-
-          # - name: to_object
-          #   cmd:
-          #     src: caseyml
-          #     reg: caseobj
-          #
-          # - name: printobj
-          #   cmd: caseobj
-
-
-          # TODO: add printobj_by_key
-          # - name: printobj
-          #   cmd: '{{.caseobj.doc_meta}}'
-
-          # - name: to_object
-          #   cmd:
-          #     src: '{{.caseobj.doc_meta}}'
-          #     reg: docobj
-
-          # - name: reg
-          #   cmd:
-          #     name: docobj
-          #     value: '{{.caseobj.doc_meta}}'
-
           - name: query
             cmd:
               ymlkey: caseyml
@@ -165,7 +115,7 @@ tasks:
           - name: casedoc
             value: '{{.docyml}}'
             expand: 2
-            flags: [to_object]
+            flags: [to_object, reg]
 
         do:
           - name: print
@@ -173,10 +123,15 @@ tasks:
               casedoc content:
               {{.casedoc}}
 
+      -
+        func: cmd
+        do:
           - name: printobj
             cmd: casedoc_object
 
-          # - name: exit
+          - name: print
+            desc: casedoc length
+            cmd: '{{ .casedoc|len }}'
 
           - name: template
             desc: generate the document
@@ -184,17 +139,7 @@ tasks:
               src: ./templates/doc.template
               dest: '{{.cases_dir}}/{{.casename | replace ".yml" ""}}.md'
               datakey: casedoc_object
-          # - name: pause
-
-      # -
-      #   func: shell
-      #
-      #   do:
-      #     - 'echo caseyml: {{.caseyml}}'
-      #     - 'echo caseob: {{.caseobj}}'
-          # - 'echo {{.doco}}'
-          # - 'echo personname:{{.personname}}'
-          # - 'echo {{.doco_object}}'
+        if: '{{ gt (.casedoc|len) 0 }}'
 
   -
     name: test
