@@ -12,7 +12,7 @@ dvars:
     flags: [vvv]
 
   - name: src_functests_dir
-    value: '{{.upproj_dir}}/tests/functests-mock'
+    value: '{{.upproj_dir}}/tests/functests'
 
   - name: ref_dir
     value: '{{.cached_functests_dir}}'
@@ -46,7 +46,6 @@ tasks:
           - name: void
             value: '{{ .cases | splitLines |reg "caselist" }}'
 
-
       - func: cmd
         desc: show the caselist available
         do:
@@ -72,7 +71,7 @@ tasks:
         func: shell
         desc: copy generated docs to publish dir
         do:
-          - rm -rf {{.cases_dir}}/cases
+          - rm -rf {{.content_dir}}/cases
           - 'cp -rf {{.cases_dir}} {{.content_dir}}/'
 
   -
@@ -109,6 +108,24 @@ tasks:
               ymlonly: true
               reg: docyml
 
+          - name: yml_delete
+            cmd:
+              ymlfile: '{{.casename}}'
+              refdir: '{{.ref_dir}}'
+              path: doc_meta
+              inplace: true
+
+          - name: readfile
+            desc: review if the file content is correct
+            cmd:
+              filename: '{{.casename}}'
+              dir: '{{.ref_dir}}'
+              reg: final_yml
+
+          - name: print
+            desc: show the modified yml content
+            cmd: '{{.final_yml}}'
+
       -
         func: cmd
         dvars:
@@ -118,10 +135,14 @@ tasks:
             flags: [to_object, reg]
 
         do:
-          - name: print
-            cmd: |
-              casedoc content:
-              {{.casedoc}}
+          - name: reg
+            cmd:
+              name: target_dir
+              value: '{{.cases_dir}}/{{.casedoc_object.folder}}'
+
+      - func: shell
+        do:
+          - 'mkdir -p {{.target_dir}}'
 
       -
         func: cmd
@@ -137,34 +158,6 @@ tasks:
             desc: generate the document
             cmd:
               src: ./templates/doc.template
-              dest: '{{.cases_dir}}/{{.casename | replace ".yml" ""}}.md'
+              dest: '{{.target_dir}}/{{.casename | replace ".yml" ""}}.md'
               datakey: casedoc_object
         if: '{{ gt (.casedoc|len) 0 }}'
-
-  -
-    name: test
-    task:
-
-      # -
-      #   func: shell
-      #   desc: read file and get doc_meta as object
-      #   vars:
-      #     yml_path: ./build/functests'
-      #     yml_file: c0001.yml
-      #
-      #   dvars:
-      #     - name: caseyml
-      #       ref: d0069.yml
-      #
-      #   do:
-      #     - 'cd {{.upproj_dir}}/tests/functests; ls c????.yml'
-      #   reg: cases
-
-      -
-        func: shell
-        desc: read file and get doc_meta as object
-
-      -
-        func: shell
-        desc: step2
-

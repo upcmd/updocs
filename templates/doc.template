@@ -28,6 +28,7 @@ draft: false
 ### Other references:
 {{ with .related }}
 {{- range $ref :=.refs }}
-{{$ref.title}}: {{$ref.link}}
+* [{{$ref.title}}:]({{$ref.link}})
 {{- end}}
 {{ end }}
+
