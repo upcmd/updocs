@@ -134,6 +134,16 @@ tasks:
             expand: 2
             flags: [to_object, reg]
 
+      -
+        func: call
+        desc: create sub folders and template the docment
+        do: generate_doc
+        if: '{{ gt (.casedoc|len) 0 }}'
+
+  -
+    name: generate_doc
+    task:
+      - func: cmd
         do:
           - name: reg
             cmd:
@@ -160,4 +170,3 @@ tasks:
               src: ./templates/doc.template
               dest: '{{.target_dir}}/{{.casename | replace ".yml" ""}}.md'
               datakey: casedoc_object
-        if: '{{ gt (.casedoc|len) 0 }}'
