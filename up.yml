@@ -5,6 +5,7 @@ vars:
   cases_dir: ./build/cases
   log_dir: ./reflogs
   content_dir: ./content
+  content_src_dir: ./content-src
 
 dvars:
   - name: upproj_dir
@@ -27,6 +28,8 @@ tasks:
         func: shell
         desc: prepare all the self documented cases
         do:
+          - 'rm -rf {{.content_dir}}'
+          - 'mkdir -p {{.content_dir}}'
           - rm -rf ./build
           - mkdir -p ./build
           - 'cp -rf {{.src_functests_dir}} {{.cached_functests_dir}}'
@@ -72,7 +75,8 @@ tasks:
         desc: copy generated docs to publish dir
         do:
           - rm -rf {{.content_dir}}/cases
-          - 'cp -rf {{.cases_dir}} {{.content_dir}}/'
+          - 'cp -rf {{.cases_dir}}/* {{.content_dir}}/'
+          - 'cp -rf {{.content_src_dir}}/* {{.content_dir}}/'
 
   -
     name: process_case
