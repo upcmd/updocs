@@ -25,8 +25,23 @@ draft: false
 
 {{- end}}
 
+##  debug
+
+{{.related}}
+{{.related.log}}
+* [verbose level v:](../../reflogs/{{$.casename}}_v.log)
+
+## end debug
+
 ### Other references:
 {{ with .related }}
+{{ if .log }}
+* [{{$.casename}} log - verbose level v:](../../reflogs/{{$.casename}}_v.log)
+* [{{$.casename}} log - verbose level vvv:](../../reflogs/{{$.casename}}_vvv.log)
+* [{{$.casename}} log - verbose level vvvv:](../../reflogs/{{$.casename}}_vvvv.log)
+* [{{$.casename}} log - verbose level vvvvv:](../../reflogs/{{$.casename}}_vvvvv.log)
+* [{{$.casename}} log - verbose level vvvvvv:](../../reflogs/{{$.casename}}_vvvvvv.log)
+{{ end }}
 {{- range $ref :=.refs }}
 * [{{$ref.title}}:]({{$ref.link}})
 {{- end}}

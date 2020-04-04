@@ -15,7 +15,6 @@ UP is designed and implemented to address some of the common problems of:
 
 It is a build tool with some features learnt from using Ansible, Make, Rake, Ant, Gradle, Puppet, Taskfile etc, but it is a little smarter to try to make things a lot easier.
 
-
 ```
 tasks:
   -
@@ -45,18 +44,20 @@ A common usage of Ansible for many companies is to use the local ssh execution w
 
 The goal of UP is to provide a quick (I'd say the quickest) solution to enable continuously integration and continuously deployment (CI/CD). It is simple to use and yet powerful to achieve many common challenges nowadays devops guys are facing in a Cloud environment
 
-It is designed with very well consideration of collabaration with automation in Kubernetes, helm charts, api call
+It is designed with very well consideration of collaboration with automation in Kubernetes, helm charts, api call
 
-It is also put best pracice of integration with common CI/CD tools, such as GOCD, Jenkins, Drone, Gitlab CI and so on
+It is also put best practice of integration with common CI/CD tools, such as GOCD, Jenkins, Drone, Gitlab CI and so on
+
+It is bringing a DSL programming into CLI and enable OO design and fast test driven development and delivery cycle     
 
 ### Features
 
-1. Drop in replacement for Makefile, but way more powerful. It uses a composible model rather than dependency model for flexibility/composibility
-2. Implemented in golang, so no dependency hell, no maintainence of runtime and ensure the version consistency accross multiple/many execution contexts
-3. Use scopes to manage group of environments, the variables associated with the scope. Fine grained scoping model to support variable auto overrding/merging. Similar to Ansible global/group vars, host vars, but more powerful to support leaf level object auto merging
-4. Use dvar - dynamic var, a special design to acheve many incredible tasks, for example:
+1. Drop in replacement for Makefile, but way more powerful. It uses a composition model rather than dependency model for flexibility/composibility
+2. Implemented in golang, so no dependency hell, no maintenance of runtime and ensure the version consistency across multiple/many execution contexts
+3. Use scopes to manage group of environments, the variables associated with the scope. Fine grained scoping model to support variable auto overriding/merging. Similar to Ansible global/group vars, host vars, but more powerful to support leaf level object auto merging
+4. Use dvar - dynamic var, a special design to achieve many incredible tasks, for example:
   * manage security: encrypt/decrypt
-  * dynamics on dynamics: it allows you to sepcify how many expanstion you'd like for a pointing variable
+  * dynamics on dynamics: it allows you to specify how many layers of expansion you'd like for a pointing variable
   * builtin templating capability
   * use golang template, supporting all(220+) (builtin|sprig|gtf) funcs/pipeline so that your configuration could be well controlled in template using objects
   * auto conversion of yaml result to object
@@ -64,13 +65,18 @@ It is also put best pracice of integration with common CI/CD tools, such as GOCD
   * manage setup/read env vars in the same scoping model so that you could have seamless integration with minimal exposed demanding ENV vars from CD/CI tool
   * auto validation for mandatory vars
 5. Color print and adjustable verbose level
-6. Flexible programming model to allow you to separate implmentation with interface so that common code could be reused via task_ref
+6. Flexible programming model to allow you to separate implementation with interface so that common code could be reused via task_ref
 Allow empty skeleton to be laid for testing driving process or guide as seudo code, but fill in the details and implementation gradually
 7. Flow control:
   * ignore_error
-  * dry runtime
+  * dry run
   * if condition support
   * loop support to iterate through a list of items
 8. Flexible configuration to load dvar, scope, flow from external yaml so that the programming code will be a little cleaner and organised
 9. Support the unlimited yml object, so yml config in var is text and it is also object.It could be merged in scopes automatically, it could be processed using go template
 10. Battery included for common builtin commands: print, reg, dereg, template, readfile, writefile
+11. Builtin yml liter and object query, modification
+12. Call func is really shining powerful design to be used:
+    * Compose the sequential execution of block of code
+    * Use the stack design, so it segregates all its local vars so that the vars used in its implementation will not pollute the caller's vars
+    * It serves like a interface to separates the goal and implementation and makes the code is reusable  

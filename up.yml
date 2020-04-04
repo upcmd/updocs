@@ -77,6 +77,7 @@ tasks:
           - rm -rf {{.content_dir}}/cases
           - 'cp -rf {{.cases_dir}}/* {{.content_dir}}/'
           - 'cp -rf {{.content_src_dir}}/* {{.content_dir}}/'
+          - 'cp -rf {{.log_dir}} {{.content_dir}}/'
 
   -
     name: process_case
@@ -87,16 +88,21 @@ tasks:
         do:
           - name: reg
             cmd:
-              name: casename
+              name: casefilename
               value: '{{.loopitem}}'
 
+          - name: reg
+            cmd:
+              name: casename
+              value: '{{.casefilename | replace ".yml" ""}}'
+
           - name: print
-            cmd: 'processing {{.casename}}'
+            cmd: 'processing {{.casefilename}}'
 
           - name: readfile
             desc: read yml file
             cmd:
-              filename: '{{.casename}}'
+              filename: '{{.casefilename}}'
               dir: '{{.cached_functests_dir}}'
               reg: caseyml
 
@@ -112,9 +118,18 @@ tasks:
               ymlonly: true
               reg: docyml
 
+      -
+        func: call
+        desc: add casename and log_dir into data model
+        do: data_enrich
+        if: '{{ gt (.docyml|len) 0 }}'
+
+      -
+        func: cmd
+        do:
           - name: yml_delete
             cmd:
-              ymlfile: '{{.casename}}'
+              ymlfile: '{{.casefilename}}'
               refdir: '{{.ref_dir}}'
               path: doc_meta
               inplace: true
@@ -122,7 +137,7 @@ tasks:
           - name: readfile
             desc: review if the file content is correct
             cmd:
-              filename: '{{.casename}}'
+              filename: '{{.casefilename}}'
               dir: '{{.ref_dir}}'
               reg: final_yml
 
@@ -143,6 +158,30 @@ tasks:
         desc: create sub folders and template the docment
         do: generate_doc
         if: '{{ gt (.casedoc|len) 0 }}'
+
+
+  -
+    name: data_enrich
+    task:
+      - func: cmd
+        do:
+          - name: yml_write
+            cmd:
+              ymlstr: '{{.docyml}}'
+              path: casename
+              nodevalue: '{{.casename}}'
+              reg: docyml
+#          - name: yml_write
+#            cmd:
+#              ymlstr: '{{.docyml}}'
+#              path: log_dir
+#              nodevalue: '{{.log_dir}}'
+#              reg: docyml
+
+          - name: print
+            cmd: |
+              ---------- docyml content---------
+              {{.docyml}}
 
   -
     name: generate_doc
@@ -172,5 +211,5 @@ tasks:
             desc: generate the document
             cmd:
               src: ./templates/doc.template
-              dest: '{{.target_dir}}/{{.casename | replace ".yml" ""}}.md'
+              dest: '{{.target_dir}}/{{.casename}}.md'
               datakey: casedoc_object
