@@ -15,9 +15,31 @@ draft: false
 
 {{$x.content}}
 
+{{ if eq $x.title "Demo" }}
+#### main task yaml file
+```
+{{ $.main_yml_ref_file |filecontent|indent 4}}
+```
+#### main log file
+```
+{{ $.main_log_ref_file |filecontent|indent 4}}
+```
+
+{{ if $x.log }}
+#### logs with different verbose level
+* [{{$.casename}} log - verbose level v](../../reflogs/{{$.casename}}_v.log)
+* [{{$.casename}} log - verbose level vv](../../reflogs/{{$.casename}}_vv.log)
+* [{{$.casename}} log - verbose level vvv](../../reflogs/{{$.casename}}_vvv.log)
+* [{{$.casename}} log - verbose level vvvv](../../reflogs/{{$.casename}}_vvvv.log)
+* [{{$.casename}} log - verbose level vvvvv](../../reflogs/{{$.casename}}_vvvvv.log)
+* [{{$.casename}} log - verbose level vvvvvv](../../reflogs/{{$.casename}}_vvvvvv.log)
+{{ end }}
+
+
+{{ end }}
+
 {{- range $ref :=.refs }}
 ##### ref: {{$ref.title}}
-
 ```
 {{$ref.link |filecontent|indent 4}}
 ```
@@ -25,23 +47,8 @@ draft: false
 
 {{- end}}
 
-##  debug
-
-{{.related}}
-{{.related.log}}
-* [verbose level v:](../../reflogs/{{$.casename}}_v.log)
-
-## end debug
-
-### Other references:
 {{ with .related }}
-{{ if .log }}
-* [{{$.casename}} log - verbose level v:](../../reflogs/{{$.casename}}_v.log)
-* [{{$.casename}} log - verbose level vvv:](../../reflogs/{{$.casename}}_vvv.log)
-* [{{$.casename}} log - verbose level vvvv:](../../reflogs/{{$.casename}}_vvvv.log)
-* [{{$.casename}} log - verbose level vvvvv:](../../reflogs/{{$.casename}}_vvvvv.log)
-* [{{$.casename}} log - verbose level vvvvvv:](../../reflogs/{{$.casename}}_vvvvvv.log)
-{{ end }}
+### Other references:
 {{- range $ref :=.refs }}
 * [{{$ref.title}}:]({{$ref.link}})
 {{- end}}
