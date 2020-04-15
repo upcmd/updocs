@@ -1,0 +1,4 @@
+
+start_hugo(){
+hugo server -D
+}

@@ -18,6 +18,10 @@ dvars:
   - name: ref_dir
     value: '{{.cached_functests_dir}}'
 
+  - name: rendered_log_dir
+    value: '{{.cases_dir}}/logs'
+
+
 tasks:
   -
     name: build
@@ -49,19 +53,13 @@ tasks:
           - name: void
             value: '{{ .cases | splitLines |reg "caselist" }}'
 
-      - func: cmd
-        desc: show the caselist available
-        do:
-          -
-            name: print
-            cmd: 'cases: {{.caselist}}'
-
       -
         func: shell
         desc: prepare the directory for the already documented cases
         do:
           - rm -rf {{.cases_dir}}
           - mkdir -p {{.cases_dir}}
+          - mkdir -p {{.rendered_log_dir}}
 
       -
         func: call
@@ -157,7 +155,7 @@ tasks:
         dvars:
           - name: casedoc
             value: '{{.docyml}}'
-            expand: 2
+            ex pand: 2
             flags: [to_object, reg]
 
       -
@@ -199,6 +197,12 @@ tasks:
 #          - name: yml_write
 #            cmd:
 #              ymlstr: '{{.docyml}}'
+#              path: page_weight
+#              value: '{{ .casename |replace "c" "" |atoi}}'
+#              reg: docyml
+#          - name: yml_write
+#            cmd:
+#              ymlstr: '{{.docyml}}'
 #              path: log_dir
 #              nodevalue: '{{.log_dir}}'
 #              reg: docyml
@@ -208,16 +212,37 @@ tasks:
               ---------- docyml content---------
               {{.docyml}}
 
+          - name: return
+            cmd:
+              - docyml
+
 #          - name: exit
   -
     name: generate_doc
     task:
+
+      - func: shell
+        do:
+          - 'echo  "casename: {{.casename}} - folder: {{.casedoc_object.folder}}" >> debug'
+
       - func: cmd
         do:
           - name: reg
             cmd:
               name: target_dir
               value: '{{.cases_dir}}/{{.casedoc_object.folder}}'
+          - name: trace
+            cmd: debug ==>
+
+
+      - func: shell
+        do:
+          - 'echo  "casename: {{.casename}} - target: {{.target_dir}}" >> debug'
+
+      - func: cmd
+        do:
+          - name: trace
+            cmd: <== debug
 
       - func: shell
         do:
@@ -225,6 +250,7 @@ tasks:
 
       -
         func: cmd
+        desc: generate the document
         do:
           - name: printobj
             cmd: casedoc_object
@@ -234,8 +260,53 @@ tasks:
             cmd: '{{ .casedoc|len }}'
 
           - name: template
-            desc: generate the document
+            desc: template the document
             cmd:
               src: ./templates/doc.template
               dest: '{{.target_dir}}/{{.casename}}.md'
               datakey: casedoc_object
+
+      -
+        func: call
+        do: generate_log_pages
+        loop:
+          - v
+          - vv
+          - vvv
+          - vvvv
+          - vvvvv
+          - vvvvvv
+          - vvvvvvv
+
+  -
+    name: generate_log_pages
+    task:
+      -
+        func: cmd
+        dvars:
+          - name: logidinumber
+            value: '{{ substr 1 5 .casename | atoi |mul 10| add 10000 |add .loopindex }}'
+            flags: [vvv,]
+
+          - name: logtemplate
+            value: |
+              title: {{.casename}}_{{.loopitem}}
+              weight: {{.logidinumber}}
+              loglevle: {{.loopitem}}
+              relatedlink: ../../{{.casedoc_object.folder}}/{{.casename}}
+              log_ref_file: {{.log_dir}}/{{.casename}}_{{.loopitem}}.log
+            flags:
+              - to_object
+              - vvvvv
+        do:
+          - name: print
+            cmd: '{{.logtemplate}}'
+          - name: print
+            cmd: '{{.loopitem}}'
+
+          - name: template
+            desc: generate the log
+            cmd:
+              src: ./templates/log.template
+              dest: '{{.rendered_log_dir}}/{{.casename}}_{{.loopitem}}.md'
+              datakey: logtemplate_object
