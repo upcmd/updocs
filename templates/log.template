@@ -12,5 +12,13 @@ weight: {{.weight}}
 {{ $.log_ref_file |filecontent|indent 4}}
 ```
 
+##### Logs with different verbose level
+* [{{.casename}} log - verbose level v](../../logs/{{.casename}}_v)
+* [{{.casename}} log - verbose level vv](../../logs/{{.casename}}_vv)
+* [{{.casename}} log - verbose level vvv](../../logs/{{.casename}}_vvvv)
+* [{{.casename}} log - verbose level vvvv](../../logs/{{.casename}}_vvvvv)
+* [{{.casename}} log - verbose level vvvvv](../../logs/{{.casename}}_vvvvvv)
+* [{{.casename}} log - verbose level vvvvvv](../../logs/{{.casename}}_vvvvvv)
+
 ##### References
 * [Related Chapter:]({{.relatedlink}})

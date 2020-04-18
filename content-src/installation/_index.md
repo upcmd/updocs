@@ -2,7 +2,7 @@
 title: "vars"
 date: 2020-02-07T14:32:46+11:00
 draft: false
-weight: 500
+weight: 100
 ---
 
 # quick-start
