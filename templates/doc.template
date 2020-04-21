@@ -15,6 +15,15 @@ weight: {{.weight}}
 {{ if $x.content }}
 {{$x.content}}
 {{ end }}
+
+
+
+{{ if $x.filelookup }}
+```
+{{ printf "%s/%s" $.ref_dir $x.filelookup|filecontent|indent 4}}
+```
+{{ end }}
+
 {{ if eq $x.title "Demo" }}
 ##### Main task yaml file
 ```
@@ -46,12 +55,12 @@ weight: {{.weight}}
 
 {{ end }}
 
+{{ if .refs }}
+##### references
 {{- range $ref :=.refs }}
-##### ref: {{$ref.title}}
-```
-{{$ref.link |filecontent|indent 4}}
-```
+* [{{$ref.title}}:]({{$ref.link}})
 {{- end}}
+{{ end }}
 
 {{- end}}
 

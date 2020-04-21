@@ -1,4 +1,7 @@
 
 start_hugo(){
-hugo server -D
+  while true; do
+    hugo server -D
+    sleep 1
+  done
 }

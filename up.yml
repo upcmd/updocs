@@ -76,6 +76,7 @@ tasks:
           - 'cp -rf {{.content_src_dir}}/* {{.content_dir}}/'
           - 'mkdir -p {{.content_dir}}/reflogs'
           - 'cp -rf {{.log_dir}}/* {{.content_dir}}/reflogs/'
+          - kill `ps -ef|grep hugo|tail -1|awk '{print $2}'`
 
   -
     name: process_case
@@ -164,7 +165,6 @@ tasks:
         do: generate_doc
         if: '{{ gt (.casedoc|len) 0 }}'
 
-
   -
     name: data_enrich
     task:
@@ -192,14 +192,36 @@ tasks:
             cmd:
               ymlstr: '{{.docyml}}'
               path: main_log_ref_file
-              value: '{{.log_dir}}/{{.casename}}_v.log'
+              value: '{{.log_dir}}/{{.casename}}_vvv.log'
               reg: docyml
+
+          - name: query
+            cmd:
+              ymlkey: docyml
+              path: weight.
+              ymlonly: true
+              reg: weightstr
+
+          - name: print
+            cmd: |
+              existing weight: {{.weightstr}}
+              weight string length: {{.weightstr|len}}
+
+      - func: cmd
+        do:
+          - name: print
+            cmd: 'setup weight'
+
           - name: yml_write
             cmd:
               ymlstr: '{{.docyml}}'
               path: weight
               value: '{{ substr 1 5 .casename | atoi |mul 10| add 100 }}'
               reg: docyml
+        if: '{{ eq (.weightstr|len) 0 }}'
+
+      - func: cmd
+        do:
 
 #          - name: yml_write
 #            cmd:
@@ -257,6 +279,15 @@ tasks:
 
       -
         func: cmd
+        desc: debug and exit
+        do:
+          - name: printobj
+            cmd: casedoc_object
+#          - name: exit
+        if: '{{eq .casename "c0009"}}'
+
+      -
+        func: cmd
         desc: generate the document
         do:
           - name: printobj
@@ -275,6 +306,8 @@ tasks:
 
       -
         func: call
+        name: loop_verbose_level
+        desc: loop all different verbose level caller
         do: generate_log_pages
         loop:
           - v
@@ -287,6 +320,7 @@ tasks:
 
   -
     name: generate_log_pages
+    desc: generage verbose level log
     task:
       -
         func: cmd

@@ -21,4 +21,4 @@ weight: {{.weight}}
 * [{{.casename}} log - verbose level vvvvvv](../../logs/{{.casename}}_vvvvvv)
 
 ##### References
-* [Related Chapter:]({{.relatedlink}})
+* [Related Chapter]({{.relatedlink}})
