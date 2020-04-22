@@ -37,6 +37,19 @@ tasks:
           - rm -rf ./build
           - mkdir -p ./build
           - 'cp -rf {{.src_functests_dir}} {{.cached_functests_dir}}'
+
+      -
+        func: shell
+        desc: prepare the directory for the already documented cases
+        do:
+          - rm -rf {{.cases_dir}}
+          - mkdir -p {{.cases_dir}}
+          - mkdir -p {{.rendered_log_dir}}
+
+      -
+        func: shell
+        desc: prepare all the self documented cases
+        do:
           - 'cd {{.cached_functests_dir}}; ls c????.yml'
         reg: cases
 
@@ -52,14 +65,6 @@ tasks:
         dvars:
           - name: void
             value: '{{ .cases | splitLines |reg "caselist" }}'
-
-      -
-        func: shell
-        desc: prepare the directory for the already documented cases
-        do:
-          - rm -rf {{.cases_dir}}
-          - mkdir -p {{.cases_dir}}
-          - mkdir -p {{.rendered_log_dir}}
 
       -
         func: call
@@ -264,9 +269,9 @@ tasks:
 #            cmd: debug ==>
 
 
-      - func: shell
-        do:
-          - 'echo  "casename: {{.casename}} - target: {{.target_dir}}" >> debug'
+#      - func: shell
+#        do:
+#          - 'echo  "casename: {{.casename}} - target: {{.target_dir}}" >> debug'
 
 #      - func: cmd
 #        do:
