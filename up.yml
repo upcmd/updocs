@@ -47,10 +47,32 @@ tasks:
           - mkdir -p {{.rendered_log_dir}}
 
       -
+        func: call
+        desc: build different types of cases
+        do:
+          - process_main_entry
+        loop:
+          - c????
+          - f????
+
+      -
+        func: shell
+        desc: copy generated docs to publish dir
+        do:
+          - 'cp -rf {{.cases_dir}}/* {{.content_dir}}/'
+          - 'cp -rf {{.content_src_dir}}/* {{.content_dir}}/'
+          - 'mkdir -p {{.content_dir}}/reflogs'
+          - 'cp -rf {{.log_dir}}/* {{.content_dir}}/reflogs/'
+          - kill `ps -ef|grep hugo|tail -1|awk '{print $2}'`
+
+  -
+    name: process_main_entry
+    task:
+      -
         func: shell
         desc: prepare all the self documented cases
         do:
-          - 'cd {{.cached_functests_dir}}; ls c????.yml'
+          - 'cd {{.cached_functests_dir}}; ls {{.loopitem}}.yml'
         reg: cases
 
       - func: cmd
@@ -72,16 +94,6 @@ tasks:
         do:
           - process_case
         loop: "caselist"
-
-      -
-        func: shell
-        desc: copy generated docs to publish dir
-        do:
-          - 'cp -rf {{.cases_dir}}/* {{.content_dir}}/'
-          - 'cp -rf {{.content_src_dir}}/* {{.content_dir}}/'
-          - 'mkdir -p {{.content_dir}}/reflogs'
-          - 'cp -rf {{.log_dir}}/* {{.content_dir}}/reflogs/'
-          - kill `ps -ef|grep hugo|tail -1|awk '{print $2}'`
 
   -
     name: process_case
