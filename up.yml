@@ -131,8 +131,9 @@ tasks:
             cmd:
               ymlkey: caseyml
               path: doc_meta.
-              ymlonly: true
               reg: docyml
+            flags:
+              - ymlonly
 
       -
         func: call
@@ -215,14 +216,15 @@ tasks:
           - name: query
             cmd:
               ymlkey: docyml
-              path: weight.
-              ymlonly: true
               reg: weightstr
+              path: weight.
+            flags:
+              - ymlonly
 
           - name: print
             cmd: |
-              existing weight: {{.weightstr}}
-              weight string length: {{.weightstr|len}}
+                existing weight: {{.weightstr}}
+                weight string length: {{.weightstr|len}}
 
       - func: cmd
         do:
@@ -235,7 +237,7 @@ tasks:
               path: weight
               value: '{{ substr 1 5 .casename | atoi |mul 10| add 100 }}'
               reg: docyml
-        if: '{{ eq (.weightstr|len) 0 }}'
+        if: '{{ eq (print .weightstr|len) 0 }}'
 
       - func: cmd
         do:
