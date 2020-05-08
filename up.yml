@@ -77,7 +77,7 @@ tasks:
 
       - func: cmd
         desc: debug
-        do:
+        dox:
           -
             name: print
             cmd: '{{.cases}}'
@@ -144,19 +144,38 @@ tasks:
       -
         func: cmd
         do:
+
+          - name: readfile
+            desc: review if the file content is correct
+            cmdx:
+              filename: '{{.casefilename}}'
+              dir: '{{.ref_dir}}'
+              reg: debug_yml
+
+          - name: print
+            cmdx: |
+              debug filename: {{.casefilename}}
+              debug dir: {{.ref_dir}}
+              content before change:
+              ---
+              {{.debug_yml}}
+              ---
+
           - name: yml_delete
             cmd:
               ymlfile: '{{.casefilename}}'
               refdir: '{{.ref_dir}}'
               path: doc_meta
-              inplace: true
+            flags:
+              - inplace
 
           - name: yml_delete
             cmd:
               ymlfile: '{{.casefilename}}'
               refdir: '{{.ref_dir}}'
               path: notes
-              inplace: true
+            flags:
+              - inplace
 
           - name: readfile
             desc: review if the file content is correct
@@ -168,6 +187,8 @@ tasks:
           - name: print
             desc: show the modified yml content
             cmd: '{{.final_yml}}'
+
+          - namex: exit
 
       -
         func: cmd
@@ -299,7 +320,7 @@ tasks:
       -
         func: cmd
         desc: debug and exit
-        do:
+        dox:
           - name: printobj
             cmd: casedoc_object
 #          - name: exit
