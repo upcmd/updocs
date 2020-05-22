@@ -36,6 +36,9 @@ Commands:
   list [<taskname>]
     list tasks and plays
 
+  assist [<assistname>]
+    assist: templatefunc|
+
   validate <validatetaskname>
     validate tasks and plays
 
@@ -74,6 +77,16 @@ yml file: ./upconfig errored: Config File "upconfig" Not Found
 
 Ξ ▶ ls             
 up.yml  upconfig.yml
+
+Ξ ▶ cat upconfig.yml
+
+version: 1.0.0
+Verbose: v
+MaxCallLayers: 8
+RefDir: .
+TaskFile: up
+ConfigDir: .
+ConfigFile: upconfig
 
 Ξ ▶ cat up.yml
 

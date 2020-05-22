@@ -123,7 +123,7 @@ tasks:
               reg: caseyml
 
           - name: print
-            cmd: |
+            cmdx: |
               yml file content:
               {{.caseyml}}
 
@@ -186,7 +186,7 @@ tasks:
 
           - name: print
             desc: show the modified yml content
-            cmd: '{{.final_yml}}'
+            cmdx: '{{.final_yml}}'
 
           - namex: exit
 
@@ -277,7 +277,7 @@ tasks:
 #              reg: docyml
 
           - name: print
-            cmd: |
+            cmdx: |
               ---------- docyml content---------
               {{.docyml}}
 
@@ -331,7 +331,7 @@ tasks:
         desc: generate the document
         do:
           - name: printobj
-            cmd: casedoc_object
+            cmdx: casedoc_object
 
           - name: print
             desc: casedoc length
