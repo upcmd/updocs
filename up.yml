@@ -80,13 +80,13 @@ tasks:
         dox:
           -
             name: print
-            cmd: '{{.cases}}'
+            cmd: '{{.cases.Output}}'
 
       - func: cmd
         desc: get the case list object
         dvars:
           - name: void
-            value: '{{ .cases | splitLines |reg "caselist" }}'
+            value: '{{ .cases.Output | splitLines |reg "caselist" }}'
 
       -
         func: call

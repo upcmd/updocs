@@ -13,7 +13,7 @@ Simply use call and put the tasks into the array list to chain them through
 
 The example below shows that the private vars scope will be shared and common for all callee tasks
 
-In this case, the combination of call and detailed callee task implementation would create a scope manageable via firstly overriding global runtime vars, then pass them through to inject needed vars as args to callee tasks 
+In this case, the combination of call and detailed callee task implementation would create a scope manageable via firstly extending global runtime vars, then pass them through to inject needed vars as args to callee tasks 
 
 ```
 tasks:

@@ -215,8 +215,8 @@ The execution runtime for action func will be:
 
 How does it work:
 
-* var a's value caller-var-a in Main overrides global runtime value global-var-a, then it is used a func arg to call func action
-* note that local-var-* in action func served as default values, if there is same name var, eg var a in global runtime or caller's execution runtime, then it will be overridden by caller  
+* var a's value caller-var-a in Main extends global runtime value global-var-a. then it is used a func arg to call func action
+* note that loca1l-var-* in action func served as default values, if there is same name var, eg var a in global runtime or caller's execution runtime, then it will be overridden by caller  
 
 
 #### func as method or reusable unit in module invoked by external func 
