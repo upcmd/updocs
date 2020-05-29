@@ -1,0 +1,37 @@
+vars:
+  folder: module
+  title: HelloWorld example
+  weight: 2130
+  head: |
+    Showcase a simplest module example by using only a sub directory
+
+    It shows that the caller task to call the module task Say_world
+
+  sections:
+    - title: How does it work?
+      content: |
+        If you need to call an external module task, then you will need to use module name with a dot, eg: "hello-module.Say_world" stands for module name hello-module, then call Say_world task
+
+    - title: task file - up.yml
+      filelookup: up.yml
+
+    - title: config file - upconfig.yml
+      filelookup: up.yml
+
+    - title: module task file - up.yml
+      filelookup: up.yml
+
+tasks:
+
+  - name: Main
+    desc: mock up test to test module.template rendering
+    task:
+      - func: cmd
+        do:
+          -
+            name: template
+            desc: render a template file to a file 1
+            cmd:
+              src: module.test.template
+              dest: mockup_doc.md
+

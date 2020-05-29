@@ -1,0 +1,39 @@
+---
+title: "{{.title}}"
+date: {{now}}
+draft: false
+weight: {{.weight}}
+
+---
+
+##### {{.head}}
+
+{{- range $x :=.sections }}
+
+### {{$x.title}}
+
+{{ if $x.content }}
+{{$x.content}}
+{{ end }}
+
+{{ if $x.filelookup }}
+```
+{{ $x.filelookup|filecontent|indent 4}}
+```
+{{ end }}
+
+{{ if .refs }}
+##### references
+{{- range $ref :=.refs }}
+* [{{$ref.title}}:]({{$ref.link}})
+{{- end}}
+{{ end }}
+
+{{- end}}
+
+{{ with .related }}
+### Other references:
+{{- range $ref :=.refs }}
+* [{{$ref.title}}:]({{$ref.link}})
+{{- end}}
+{{ end }}

@@ -2,6 +2,7 @@ version: 1.0.0
 
 vars:
   cached_functests_dir: ./build/functests
+  cached_modtests_dir: ./build/modtests
   cases_dir: ./build/cases
   log_dir: ./reflogs
   content_dir: ./content
@@ -14,6 +15,9 @@ dvars:
 
   - name: src_functests_dir
     value: '{{.upproj_dir}}/tests/functests'
+
+  - name: src_modtests_dir
+    value: '{{.upproj_dir}}/tests/modtests'
 
   - name: ref_dir
     value: '{{.cached_functests_dir}}'
@@ -37,6 +41,7 @@ tasks:
           - rm -rf ./build
           - mkdir -p ./build
           - 'cp -rf {{.src_functests_dir}} {{.cached_functests_dir}}'
+          - 'cp -rf {{.src_modtests_dir}} {{.cached_modtests_dir}}'
 
       -
         func: shell
@@ -48,12 +53,13 @@ tasks:
 
       -
         func: call
-        desc: build different types of cases
+        desc: build different types of cases of functests
         do:
           - process_main_entry
         loop:
           - c????
           - f????
+
 
       -
         func: shell
@@ -63,7 +69,87 @@ tasks:
           - 'cp -rf {{.content_src_dir}}/* {{.content_dir}}/'
           - 'mkdir -p {{.content_dir}}/reflogs'
           - 'cp -rf {{.log_dir}}/* {{.content_dir}}/reflogs/'
+
+      -
+        func: cmd
+        dox:
+          - name: exit
+
+      -
+        func: call
+        desc: build doc for module tests
+        do:
+          - process_module_docs
+        loop:
+          - ????
+
+      -
+        func: shell
+        desc: restart hugo
+        do:
           - kill `ps -ef|grep hugo|tail -1|awk '{print $2}'`
+
+  -
+    name: process_module_docs
+    task:
+
+      -
+        func: shell
+        desc: |
+          get mod tests dirs
+          ./0001
+          ......
+        do:
+          - 'cd {{.cached_modtests_dir}}; find . -name "????" -maxdepth 1 -mindepth 1 -type d|sort|cut -d\/ -f2'
+        reg: cases
+
+      - func: cmd
+        desc: debug
+        dox:
+          -
+            name: print
+            cmd: '{{.cases.Output}}'
+
+      - func: cmd
+        desc: get the case list object
+        dvars:
+          - name: void
+            value: '{{ .cases.Output | splitLines |reg "caselist" }}'
+
+      - func: cmd
+        do:
+          - name: print
+            cmd: 'caselist: {{.caselist}}'
+
+      - func: call
+        do: process_each_module_case
+        loop: caselist
+
+  -
+    name: process_each_module_case
+    task:
+      - func: cmd
+        varsfile: 'doc.yml'
+        refdir: '{{.cached_modtests_dir}}/{{.loopitem}}'
+        dvars:
+          - name: modcase
+            value: '{{.loopitem}}'
+        do:
+          - name: print
+            cmd: 'case dir: {{.modcase}}'
+
+          -
+            name: inspect
+            desc: the vars in caller after invoking module task
+            cmd:
+              - exec_vars
+
+          -
+            name: template
+            desc: render module test doco
+            cmd:
+              src: ./templates/module.template
+              dest: '{{.content_dir}}/module/{{.modcase}}.md'
 
   -
     name: process_main_entry
