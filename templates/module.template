@@ -29,7 +29,32 @@ weight: {{.weight}}
 {{- end}}
 {{ end }}
 
-{{- end}}
+{{ end }}
+
+
+{{ if .log }}
+##### Main log file
+
+```
+{{ printf "%s%s%s.log" "./reflogs/m" .modcase "_v" |filecontent|indent 4}}
+```
+
+##### Logs with different verbose level
+* [{{.modcase}} log - verbose level v](../../logs/m{{.modcase}}_v)
+* [{{.modcase}} log - verbose level vv](../../logs/m{{.modcase}}_vv)
+* [{{.modcase}} log - verbose level vvv](../../logs/m{{.modcase}}_vvvv)
+* [{{.modcase}} log - verbose level vvvv](../../logs/m{{.modcase}}_vvvvv)
+* [{{.modcase}} log - verbose level vvvvv](../../logs/m{{.modcase}}_vvvvvv)
+* [{{.modcase}} log - verbose level vvvvvv](../../logs/m{{.modcase}}_vvvvvv)
+
+##### Raw logs with different verbose level
+* [{{.modcase}} raw log - verbose level v](../../reflogs/m{{.modcase}}_v.log)
+* [{{.modcase}} raw log - verbose level vv](../../reflogs/m{{.modcase}}_vv.log)
+* [{{.modcase}} raw log - verbose level vvv](../../reflogs/m{{.modcase}}_vvv.log)
+* [{{.modcase}} raw log - verbose level vvvv](../../reflogs/m{{.modcase}}_vvvv.log)
+* [{{.modcase}} raw log - verbose level vvvvv](../../reflogs/m{{.modcase}}_vvvvv.log)
+* [{{.modcase}} raw log - verbose level vvvvvv](../../reflogs/m{{.modcase}}_vvvvvv.log)
+{{ end }}
 
 {{ with .related }}
 ### Other references:
