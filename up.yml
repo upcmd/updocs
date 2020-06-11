@@ -57,12 +57,11 @@ tasks:
       -
         func: call
         desc: build different types of cases of functests
-        dox:
+        do:
           - process_main_entry
         loop:
           - c????
           - f????
-
 
       -
         func: shell
