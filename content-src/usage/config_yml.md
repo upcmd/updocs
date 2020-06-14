@@ -62,3 +62,35 @@ Please ref to:  [CLI command line args](../../usage/cli_args) for details
 You could simply make default to current directory, so that you could have a project based configuration, or you could use a global config, eg: ~/.up/upconfig.yml for all projects
 
 * ConfigFile: This is the default configfile name for your configuration, by default it is upconfig, that means your config file will be loaded frm upconfig.yml
+
+* ShellType: This is the shell to execute the shell func command
+
+You could configure it in following ways:
+
+1. default: /bin/shell
+
+If you do not setup anything, this would be the default
+
+2. customized location of your own shell, eg: /usr/local/local/shell
+
+3. maybe more generic, if you do not care about the path of the shell executable: env shell
+
+4. you can try different type of shell, eg: /usr/local/bin/bash
+
+Please note, it is best practice to use /bin/shell for consistency of the behavior and note that the tasks are mainly for CI/CD build and it is better to not to have any flavour but just simply and run anywhere, also in this way, your code could be wrapped and publish to be shared as module to be easily used by others
+
+5. use: GOSH, GOSH is a golang implementation of shell parser, if you choose to use GOSH, it means you don't have to rely a MacBook or Linux machine to run UP cmd, you can use windows to execute UP cmd 
+
+Please note, here GOSH is just a string name, not a path
+
+Please ref to:  [gosh cross platform shell parser](https://github.com/mvdan/sh) for details
+
+6. use: GOSH externally
+
+You can install GOSH into your local as binary, following above details, you should be able to install it using go install: 
+
+```bash
+go install mvdan.cc/sh/v3/cmd/gosh
+```
+
+then setup ShellType: ~/go/bin/GOSH
