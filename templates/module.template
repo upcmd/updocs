@@ -8,6 +8,8 @@ weight: {{.weight}}
 
 ##### {{.head}}
 
+[source](https://github.com/upcmd/up/tree/master/tests/modtests/{{$.modcase}})
+
 {{- range $x :=.sections }}
 
 ### {{$x.title}}
@@ -42,10 +44,9 @@ weight: {{.weight}}
 ##### Logs with different verbose level
 * [{{.modcase}} log - verbose level v](../../logs/m{{.modcase}}_v)
 * [{{.modcase}} log - verbose level vv](../../logs/m{{.modcase}}_vv)
-* [{{.modcase}} log - verbose level vvv](../../logs/m{{.modcase}}_vvvv)
-* [{{.modcase}} log - verbose level vvvv](../../logs/m{{.modcase}}_vvvvv)
-* [{{.modcase}} log - verbose level vvvvv](../../logs/m{{.modcase}}_vvvvvv)
-* [{{.modcase}} log - verbose level vvvvvv](../../logs/m{{.modcase}}_vvvvvv)
+* [{{.modcase}} log - verbose level vvv](../../logs/m{{.modcase}}_vvv)
+* [{{.modcase}} log - verbose level vvvv](../../logs/m{{.modcase}}_vvvv)
+* [{{.modcase}} log - verbose level vvvvv](../../logs/m{{.modcase}}_vvvvv)
 
 ##### Raw logs with different verbose level
 * [{{.modcase}} raw log - verbose level v](../../reflogs/m{{.modcase}}_v.log)
@@ -53,7 +54,6 @@ weight: {{.weight}}
 * [{{.modcase}} raw log - verbose level vvv](../../reflogs/m{{.modcase}}_vvv.log)
 * [{{.modcase}} raw log - verbose level vvvv](../../reflogs/m{{.modcase}}_vvvv.log)
 * [{{.modcase}} raw log - verbose level vvvvv](../../reflogs/m{{.modcase}}_vvvvv.log)
-* [{{.modcase}} raw log - verbose level vvvvvv](../../reflogs/m{{.modcase}}_vvvvvv.log)
 {{ end }}
 
 {{ with .related }}

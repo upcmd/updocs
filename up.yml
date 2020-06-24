@@ -31,7 +31,7 @@ dvars:
 
 tasks:
   -
-    name: build
+    name: Build
     desc: build the showcases automatically
     task:
 

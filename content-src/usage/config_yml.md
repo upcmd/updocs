@@ -36,6 +36,8 @@ The supported verbose level:
     5. vvvvv
     6. vvvvvv
 
+Level vvvvvv is used for debugging and reporting bug only 
+
 * MaxCallLayers: This is the allowed max call layers you want your program to handle
 
 In case your program accidentally enters a recursive endless loop, this will ensure your program to exit 

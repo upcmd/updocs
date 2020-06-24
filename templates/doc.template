@@ -25,6 +25,8 @@ weight: {{.weight}}
 {{ end }}
 
 {{ if eq $x.title "Demo" }}
+[source](https://github.com/upcmd/up/blob/master/tests/functests/{{$.casename}}.yml)
+
 ##### Main task yaml file
 ```
 {{ $.main_yml_ref_file |filecontent|indent 4}}
@@ -39,9 +41,8 @@ weight: {{.weight}}
 * [{{$.casename}} log - verbose level v](../../logs/{{$.casename}}_v)
 * [{{$.casename}} log - verbose level vv](../../logs/{{$.casename}}_vv)
 * [{{$.casename}} log - verbose level vvv](../../logs/{{$.casename}}_vvvv)
-* [{{$.casename}} log - verbose level vvvv](../../logs/{{$.casename}}_vvvvv)
-* [{{$.casename}} log - verbose level vvvvv](../../logs/{{$.casename}}_vvvvvv)
-* [{{$.casename}} log - verbose level vvvvvv](../../logs/{{$.casename}}_vvvvvv)
+* [{{$.casename}} log - verbose level vvvv](../../logs/{{$.casename}}_vvvv)
+* [{{$.casename}} log - verbose level vvvvv](../../logs/{{$.casename}}_vvvvv)
 
 ##### Raw logs with different verbose level
 * [{{$.casename}} raw log - verbose level v](../../reflogs/{{$.casename}}_v.log)
@@ -49,7 +50,6 @@ weight: {{.weight}}
 * [{{$.casename}} raw log - verbose level vvv](../../reflogs/{{$.casename}}_vvv.log)
 * [{{$.casename}} raw log - verbose level vvvv](../../reflogs/{{$.casename}}_vvvv.log)
 * [{{$.casename}} raw log - verbose level vvvvv](../../reflogs/{{$.casename}}_vvvvv.log)
-* [{{$.casename}} raw log - verbose level vvvvvv](../../reflogs/{{$.casename}}_vvvvvv.log)
 {{ end }}
 
 

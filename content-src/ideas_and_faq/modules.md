@@ -15,7 +15,7 @@ A few reasons this is the best:
 
 1. Implementing new features into UP cmd will definitely change the codebase and result in some kind of unstable behavior or bugs. Any such change will probably break user's build pipeline which could best to be avoided. 
 
-2. By invoking the right version of external tool, you instantly gain what you need, if you are not happy, you can use a upgraded version or downgraded version of that tool. This does not necessary bundle together with UP cmd, it perfectly avoids the dependency hell problem or being forced to upgrade for the sake of upgrading to use one tiny feature of new version but break the rest of your entire stack.     
+2. By invoking the right version of external tool, you instantly gain what you need, if you are not happy, you can use a upgraded version or downgraded version of that tool. This does not necessary bundle together with UP cmd, it perfectly avoids the dependency hell problem or being forced to upgrade for the sake of upgrading to use one tiny feature of new version but break the rest of your entire stack. Refer to: https://nixos.org/nixos/nix-pills/why-you-should-give-it-a-try.html#idm140737320838032 to taste a little of dependency hell.     
 
 3. It will benefit from all open source community and gain most success of your own project and product
 
