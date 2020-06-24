@@ -10,7 +10,8 @@ vars:
 
 dvars:
   - name: upproj_dir
-    value: '{{ env "UP_PROJ_DIR" |validateMandatoryFailIfNone "upproj_dir" }}'
+    desc: default to use project build path else use the mockup testing path
+    value: '{{ env "UP_PROJ_DIR" |default "/up_project/up" }}'
     flags: [vvv]
 
   - name: src_functests_dir
@@ -30,10 +31,39 @@ dvars:
 
 
 tasks:
+
+  -
+    name: facts
+    desc: gather facts
+    task:
+      -
+        func: shell
+        do:
+          - uname
+        reg: result
+
+      - func: cmd
+        desc: get os  - [Darwin | Linux]
+        dvars:
+          - name: os
+            value: '{{ .result.Output }}'
+            flags:
+              - v
+        do:
+          - name: print
+            cmd: 'OS: {{.os}}'
+          - name: return
+            cmd:
+              - os
+
   -
     name: Build
     desc: build the showcases automatically
     task:
+
+      - func: call
+        do:
+          - facts
 
       -
         func: shell
@@ -91,6 +121,7 @@ tasks:
         desc: restart hugo
         do:
           - kill `ps -ef|grep hugo|grep -v grep|tail -1|awk '{print $2}'`
+        if: '{{ eq .os "Darwin" }}'
 
   -
     name: process_module_docs
