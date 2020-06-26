@@ -57,6 +57,23 @@ tasks:
               - os
 
   -
+    name: testingWarning
+    desc: it should warn if the build task is for testing only
+    task:
+      - func: block
+        do:
+          - func: cmd
+            do:
+              - name: print
+                cmd: 'building OS: {{.os}}'
+              - name: colorprint
+                cmd:
+                  msg: ?? WARN - This is a build for testing purpose only. Enter to continue!
+                  fg: red
+              - name: pause
+        if: '{{ eq .os "Darwin" }}'
+
+  -
     name: Build
     desc: build the showcases automatically
     task:
@@ -64,6 +81,7 @@ tasks:
       - func: call
         do:
           - facts
+          - testingWarning
 
       -
         func: shell
@@ -198,8 +216,6 @@ tasks:
           - vvv
           - vvvv
           - vvvvv
-          - vvvvvv
-          - vvvvvvv
 
   -
     name: generate_module_log_pages
@@ -526,8 +542,6 @@ tasks:
           - vvv
           - vvvv
           - vvvvv
-          - vvvvvv
-          - vvvvvvv
 
   -
     name: generate_log_pages
