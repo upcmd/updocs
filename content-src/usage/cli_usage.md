@@ -55,18 +55,6 @@ Commands:
 
 ```
 
-#### Minimal requirement to run a task
-
-You will need a upconfig.yml file to be there in your current working directory, otherwise you will get an error like below:
-
-```
-
-Ξ ▶ up ngo taskname
-loading [Config]:  ./upconfig
-yml file: ./upconfig errored: Config File "upconfig" Not Found 
-
-```
-
 
 #### Auto create a required config.yml file and skeleton task file to start
 

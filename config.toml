@@ -1,4 +1,4 @@
-baseURL = "https://upcmd.mywire.org/"
+baseURL = "https://upcmd.netlify.app/"
 languageCode = "en-us"
 title = "up - ultimate provisioner command manual"
 theme = "updocs-theme"
