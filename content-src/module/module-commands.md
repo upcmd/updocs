@@ -34,13 +34,13 @@ module: [focused_engelbart0] instance id: [nonamed]
 
 ```
 
-#### update modules
+#### pull modules
 
-update module is to pull the module repo from the defined url. If the version is defined, eg a branch name, a tag or a commit SHA, then it will checkout that specific version 
+pull module is to pull the module repo from the defined url. If the version is defined, eg a branch name, a tag or a commit SHA, then it will checkout that specific version 
 
 ```
 
-modtests/0008 git:▶ up mod update
+modtests/0008 git:▶ up mod pull
 loading [Config]:  ./upconfig.yml
 Main config:
              Version -> 1.0.0
@@ -133,13 +133,13 @@ HEAD is now at e8e9dc5 updated
 
 #### lock modules
 
-Once you complete your development and tests, if you are happy with the task implementation from the module, you can lock the modules. By doing so, there will be a modlock.yml file created, for your future update operation, if there is a configuration entry in your configuration:
+Once you complete your development and tests, if you are happy with the task implementation from the module, you can lock the modules. By doing so, there will be a modlock.yml file created, for your future pull operation, if there is a configuration entry in your configuration:
 
 ```
 ModuleLock: true
 ```   
 
-then the module update will respect this lock flag, the module update and repo pull operation will check out and use that specific locked version for you
+then the module pull will respect this lock flag, the module update and repo pull operation will check out and use that specific locked version for you
 
 ```
 

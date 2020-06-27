@@ -26,7 +26,6 @@ tasks:
           - echo "hello, world"
 ```
 
-
 ###  Why yet another build tool
 
 * Make was initially designed and used for building C program, even though it could be adopted for other purpose, some of the hard to learn trivials offten cause problems than the benefits added to the team, and it is burning your brain. It is hard to make automation task a little more complex, readbility degrades rapidly and it is risky to implement critical logic using Make. Make is just a little old for modern business requirements.
@@ -82,4 +81,11 @@ Allow empty skeleton to be laid for testing driving process or guide as seudo co
     * Compose the sequential execution of block of code
     * Use the stack design, so it segregates all its local vars so that the vars used in its implementation will not pollute the caller's vars
     * It serves like a interface to separates the goal and implementation and makes the code is reusable  
-13. The shell execution binary is configurable, builtin support for GOSH (mvdan.cc/sh). This means that you do not need native shell/bash/zsh installed in order for task execution, you can run task from a windows machine. 
+13. The shell execution binary is configurable, builtin support for GOSH (mvdan.cc/sh). This means that you do not need native shell/bash/zsh installed in order for task execution, you can run task from a windows machine.
+14. It provides a module mechanism to encourage community to share modular code so that you do not need to reinvent the wheel to develop the same function again  
+
+### A little taste of UPcmd
+
+Below shows a simple greeting example, also shows list, inspect and execution of the task 
+
+![A little taste](a_little_taste.png)
