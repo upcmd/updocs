@@ -5,4 +5,12 @@ draft: false
 weight: 100
 ---
 
-# Installation
+### A little taste of UPcmd
+
+Below shows a simple greeting example, also shows list, inspect and execution of the task
+
+![A little taste](https://raw.githubusercontent.com/upcmd/updocs/master/static/a_little_taste.png)
+
+### Demo
+
+![demo](https://raw.githubusercontent.com/upcmd/up-demo/master/intro.gif)

@@ -117,8 +117,8 @@ tasks:
         do:
           - 'cp -rf {{.cases_dir}}/* {{.content_dir}}/'
           - 'cp -rf {{.content_src_dir}}/* {{.content_dir}}/'
-          - 'mkdir -p {{.content_dir}}/reflogs'
-          - 'cp -rf {{.log_dir}}/* {{.content_dir}}/reflogs/'
+          - 'rm -rf static/reflogs'
+          - 'cp -rf {{.log_dir}} static/'
 
       -
         func: cmd
