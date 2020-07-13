@@ -2,7 +2,7 @@
 title: "http/rest api support"
 date: 2020-06-25T22:32:46+11:00
 draft: false
-weight: 2204
+weight: 2205
 ---
 
 #### Why not a func implementation for http GET/POST or rest API call etc
