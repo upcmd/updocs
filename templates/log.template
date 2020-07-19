@@ -9,7 +9,7 @@ weight: {{.weight}}
 ### Log reference: {{.loglevel}}
 
 ```
-{{ $.log_ref_file |filecontent|indent 4}}
+{{ $.log_ref_file |fileContent|indent 4}}
 ```
 
 ##### Logs with different verbose level

@@ -6,7 +6,7 @@ weight: 1000
 ---
 
 # shell func
-        - name: readfile
+        - name: readFile
           desc: read content of a file and register it to a var
           cmd:
             filename: mystory.txt

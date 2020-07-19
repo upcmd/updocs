@@ -50,7 +50,7 @@ The shell execution result is wrapped into last_result for convenient access. Yo
 .last_result.Output 
 ``` 
 
-You can use ignore_error to ignore the error encountered
+You can use ignoreError to ignore the error encountered
 
 ##### references
 

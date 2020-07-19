@@ -239,7 +239,7 @@ tasks:
           - name: print
             cmd: 'processing {{.casefilename}}'
 
-          - name: readfile
+          - name: readFile
             desc: read yml file
             cmd:
               filename: '{{.casefilename}}'
@@ -257,7 +257,7 @@ tasks:
               path: doc_meta.
               reg: docyml
             flags:
-              - ymlonly
+              - ymlOnly
 
       -
         func: call
@@ -269,7 +269,7 @@ tasks:
         func: cmd
         do:
 
-          - name: readfile
+          - name: readFile
             desc: review if the file content is correct
             cmdx:
               filename: '{{.casefilename}}'
@@ -285,7 +285,7 @@ tasks:
               {{.debug_yml}}
               ---
 
-          - name: yml_delete
+          - name: ymlDelete
             cmd:
               ymlfile: '{{.casefilename}}'
               refdir: '{{.ref_dir}}'
@@ -293,7 +293,7 @@ tasks:
             flags:
               - inplace
 
-          - name: yml_delete
+          - name: ymlDelete
             cmd:
               ymlfile: '{{.casefilename}}'
               refdir: '{{.ref_dir}}'
@@ -301,7 +301,7 @@ tasks:
             flags:
               - inplace
 
-          - name: readfile
+          - name: readFile
             desc: review if the file content is correct
             cmd:
               filename: '{{.casefilename}}'
@@ -320,7 +320,7 @@ tasks:
           - name: casedoc
             value: '{{.docyml}}'
             ex pand: 2
-            flags: [to_object, reg]
+            flags: [toObj, reg]
 
       -
         func: call
@@ -333,25 +333,25 @@ tasks:
     task:
       - func: cmd
         do:
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: casename
               value: '{{.casename}}'
               reg: docyml
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: ref_dir
               value: '{{.ref_dir}}'
               reg: docyml
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: main_yml_ref_file
               value: '{{.ref_dir}}/{{.casefilename}}'
               reg: docyml
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: main_log_ref_file
@@ -364,7 +364,7 @@ tasks:
               reg: weightstr
               path: weight.
             flags:
-              - ymlonly
+              - ymlOnly
 
           - name: print
             cmd: |
@@ -376,7 +376,7 @@ tasks:
           - name: print
             cmd: 'setup weight'
 
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: weight
@@ -387,13 +387,13 @@ tasks:
       - func: cmd
         do:
 
-#          - name: yml_write
+#          - name: ymlWrite
 #            cmd:
 #              ymlstr: '{{.docyml}}'
 #              path: page_weight
 #              value: '{{ .casename |replace "c" "" |atoi}}'
 #              reg: docyml
-#          - name: yml_write
+#          - name: ymlWrite
 #            cmd:
 #              ymlstr: '{{.docyml}}'
 #              path: log_dir
@@ -445,7 +445,7 @@ tasks:
         func: cmd
         desc: debug and exit
         dox:
-          - name: printobj
+          - name: printObj
             cmd: casedoc_object
 #          - name: exit
         if: '{{eq .casename "c0009"}}'
@@ -454,7 +454,7 @@ tasks:
         func: cmd
         desc: generate the document
         do:
-          - name: printobj
+          - name: printObj
             cmd: casedoc_object
 
           - name: print
@@ -502,7 +502,7 @@ tasks:
               relatedlink: ../../{{.casedoc_object.folder}}/{{.casename}}
               log_ref_file: {{.log_dir}}/{{.casename}}_{{.loopitem}}.log
             flags:
-              - to_object
+              - toObj
               - vvvvv
         do:
           - name: print
@@ -703,17 +703,17 @@ c0140.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0001.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -722,19 +722,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -753,7 +753,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 516
@@ -856,17 +856,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0002.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -875,19 +875,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -906,7 +906,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1254
@@ -1009,17 +1009,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0003.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -1028,19 +1028,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -1059,7 +1059,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 313
@@ -1162,17 +1162,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0004.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -1181,19 +1181,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -1212,7 +1212,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 279
@@ -1315,17 +1315,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0005.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -1334,19 +1334,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -1365,7 +1365,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 576
@@ -1468,17 +1468,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0006.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -1487,19 +1487,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -1518,7 +1518,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 416
@@ -1621,17 +1621,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0007.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -1640,19 +1640,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -1671,7 +1671,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 646
@@ -1774,17 +1774,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0008.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -1793,19 +1793,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -1824,7 +1824,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1673
@@ -1927,17 +1927,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0009.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -1946,19 +1946,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -1977,7 +1977,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1693
@@ -2080,17 +2080,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0010.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -2099,19 +2099,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -2130,7 +2130,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1266
@@ -2233,17 +2233,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0011.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -2252,19 +2252,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -2283,7 +2283,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 295
@@ -2386,17 +2386,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0012.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -2405,19 +2405,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -2436,7 +2436,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 629
@@ -2539,17 +2539,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0013.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -2558,19 +2558,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -2589,7 +2589,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1777
@@ -2692,17 +2692,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0014.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -2711,19 +2711,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -2742,7 +2742,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1430
@@ -2845,17 +2845,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0017.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -2864,19 +2864,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -2895,7 +2895,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 592
@@ -2998,17 +2998,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0019.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -3017,19 +3017,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -3048,7 +3048,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 473
@@ -3151,17 +3151,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0020.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -3170,19 +3170,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -3201,7 +3201,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 823
@@ -3304,17 +3304,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0021.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -3323,19 +3323,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -3354,7 +3354,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 377
@@ -3457,17 +3457,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0022.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -3476,19 +3476,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -3507,7 +3507,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 564
@@ -3610,17 +3610,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0023.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -3629,19 +3629,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -3660,7 +3660,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1194
@@ -3763,17 +3763,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0024.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -3782,19 +3782,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -3813,7 +3813,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 293
@@ -3916,17 +3916,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0025.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -3935,19 +3935,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -3966,7 +3966,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 544
@@ -4069,17 +4069,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0026.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -4088,19 +4088,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -4119,7 +4119,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 463
@@ -4222,17 +4222,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0027.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -4241,19 +4241,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -4272,7 +4272,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 702
@@ -4375,17 +4375,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0028.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -4394,19 +4394,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -4425,7 +4425,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 488
@@ -4528,17 +4528,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0029.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -4547,19 +4547,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -4578,7 +4578,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 429
@@ -4681,17 +4681,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0030.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -4700,19 +4700,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -4731,7 +4731,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 540
@@ -4834,17 +4834,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0031.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -4853,19 +4853,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -4884,7 +4884,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 334
@@ -4987,17 +4987,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0032.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -5006,19 +5006,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -5037,7 +5037,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 552
@@ -5140,17 +5140,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0033.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -5159,19 +5159,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -5190,7 +5190,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 279
@@ -5293,17 +5293,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0034.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -5312,19 +5312,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -5343,7 +5343,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 332
@@ -5446,17 +5446,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0035.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -5465,19 +5465,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -5496,7 +5496,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 357
@@ -5599,17 +5599,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0036.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -5618,19 +5618,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -5649,7 +5649,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 597
@@ -5752,17 +5752,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0037.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -5771,19 +5771,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -5802,7 +5802,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1568
@@ -5905,17 +5905,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0038.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -5924,19 +5924,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -5955,7 +5955,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 498
@@ -6058,17 +6058,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0039.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -6077,19 +6077,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -6108,7 +6108,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 370
@@ -6211,17 +6211,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0040.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -6230,19 +6230,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -6261,7 +6261,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 256
@@ -6364,17 +6364,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0041.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -6383,19 +6383,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -6414,7 +6414,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 349
@@ -6517,17 +6517,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0042.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -6536,19 +6536,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -6567,7 +6567,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 905
@@ -6670,17 +6670,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0043.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -6689,19 +6689,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -6720,7 +6720,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 723
@@ -6823,17 +6823,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0044.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -6842,19 +6842,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -6873,7 +6873,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 286
@@ -6976,17 +6976,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0046.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -6995,19 +6995,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -7026,7 +7026,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 370
@@ -7129,17 +7129,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0047.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -7148,19 +7148,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -7179,7 +7179,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 493
@@ -7282,17 +7282,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0048.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -7301,19 +7301,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -7332,7 +7332,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 380
@@ -7435,17 +7435,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0049.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -7454,19 +7454,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -7485,7 +7485,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 787
@@ -7588,17 +7588,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0050.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -7607,19 +7607,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -7638,7 +7638,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 451
@@ -7741,17 +7741,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0051.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -7760,19 +7760,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -7791,7 +7791,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1502
@@ -7894,17 +7894,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0052.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -7913,19 +7913,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -7944,7 +7944,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 450
@@ -8047,17 +8047,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0054.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -8066,19 +8066,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -8097,7 +8097,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 418
@@ -8200,17 +8200,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0055.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -8219,19 +8219,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -8250,7 +8250,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 837
@@ -8353,17 +8353,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0056.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 1400
@@ -8376,13 +8376,13 @@ weight string length: 5
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -8401,7 +8401,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1169
@@ -8504,17 +8504,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0059.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -8523,19 +8523,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -8554,7 +8554,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 622
@@ -8657,17 +8657,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0060.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -8676,19 +8676,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -8707,7 +8707,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 711
@@ -8810,17 +8810,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0061.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -8829,19 +8829,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -8860,7 +8860,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 823
@@ -8963,17 +8963,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0062.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -8982,19 +8982,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -9013,7 +9013,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 955
@@ -9116,17 +9116,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0063.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -9135,19 +9135,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -9166,7 +9166,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 790
@@ -9269,17 +9269,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0064.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -9288,19 +9288,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -9319,7 +9319,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 652
@@ -9422,17 +9422,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0065.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -9441,19 +9441,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -9472,7 +9472,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 660
@@ -9575,17 +9575,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0066.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -9594,19 +9594,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -9625,7 +9625,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1281
@@ -9728,17 +9728,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0068.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -9747,19 +9747,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -9778,7 +9778,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 582
@@ -9881,17 +9881,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0069.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -9900,19 +9900,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -9931,7 +9931,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 685
@@ -10034,17 +10034,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0070.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -10053,19 +10053,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -10084,7 +10084,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 530
@@ -10187,17 +10187,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0071.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -10206,19 +10206,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -10237,7 +10237,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 692
@@ -10340,17 +10340,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0072.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -10359,19 +10359,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -10390,7 +10390,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 741
@@ -10493,17 +10493,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0073.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -10512,19 +10512,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -10543,7 +10543,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1686
@@ -10646,17 +10646,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0074.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -10665,19 +10665,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -10696,7 +10696,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 642
@@ -10799,17 +10799,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0075.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -10818,19 +10818,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -10849,7 +10849,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 608
@@ -10952,17 +10952,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0076.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -10971,19 +10971,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11002,7 +11002,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 728
@@ -11105,17 +11105,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0078.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -11124,19 +11124,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11155,7 +11155,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 379
@@ -11258,17 +11258,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0079.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -11277,19 +11277,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11308,7 +11308,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 830
@@ -11411,17 +11411,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0080.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -11430,19 +11430,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11461,7 +11461,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 362
@@ -11564,17 +11564,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0081.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -11583,19 +11583,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11614,7 +11614,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1046
@@ -11717,17 +11717,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0082.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -11736,19 +11736,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11767,7 +11767,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1039
@@ -11870,19 +11870,19 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0083.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11896,19 +11896,19 @@ processing c0083.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0084.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11922,17 +11922,17 @@ processing c0084.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0085.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -11941,19 +11941,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -11972,7 +11972,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 268
@@ -12075,17 +12075,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0086.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -12094,19 +12094,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -12125,7 +12125,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 443
@@ -12228,17 +12228,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0087.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -12247,19 +12247,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -12278,7 +12278,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 239
@@ -12381,17 +12381,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0088.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -12400,19 +12400,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -12431,7 +12431,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 877
@@ -12534,17 +12534,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0089.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -12553,19 +12553,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -12584,7 +12584,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 970
@@ -12687,17 +12687,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0090.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -12706,19 +12706,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -12737,7 +12737,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 395
@@ -12840,17 +12840,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0091.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -12859,19 +12859,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -12890,7 +12890,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 402
@@ -12993,17 +12993,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0092.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -13012,19 +13012,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -13043,7 +13043,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 399
@@ -13146,17 +13146,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0093.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -13165,19 +13165,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -13196,7 +13196,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 348
@@ -13299,17 +13299,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0094.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -13318,19 +13318,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -13349,7 +13349,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 733
@@ -13452,17 +13452,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0095.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -13471,19 +13471,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -13502,7 +13502,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 736
@@ -13605,17 +13605,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0096.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -13624,19 +13624,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -13655,7 +13655,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1198
@@ -13758,17 +13758,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0098.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -13777,19 +13777,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -13808,7 +13808,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1013
@@ -13911,17 +13911,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0099.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -13930,19 +13930,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -13961,7 +13961,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 983
@@ -14064,17 +14064,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0100.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -14083,19 +14083,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -14114,7 +14114,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1470
@@ -14217,17 +14217,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0101.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -14236,19 +14236,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -14267,7 +14267,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 659
@@ -14370,17 +14370,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0102.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -14389,19 +14389,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -14420,7 +14420,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 927
@@ -14523,17 +14523,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0103.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -14542,19 +14542,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -14573,7 +14573,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 906
@@ -14676,17 +14676,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0104.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 152
@@ -14699,13 +14699,13 @@ weight string length: 4
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -14724,7 +14724,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 561
@@ -14827,17 +14827,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0105.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -14846,19 +14846,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -14877,7 +14877,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 299
@@ -14980,17 +14980,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0106.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -14999,19 +14999,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -15030,7 +15030,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 831
@@ -15133,17 +15133,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0107.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -15152,19 +15152,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -15183,7 +15183,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 485
@@ -15286,17 +15286,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0108.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -15305,19 +15305,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -15336,7 +15336,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 655
@@ -15439,17 +15439,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0109.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -15458,19 +15458,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -15489,7 +15489,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 395
@@ -15592,17 +15592,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0110.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -15611,19 +15611,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -15642,7 +15642,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 335
@@ -15745,17 +15745,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0111.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -15764,19 +15764,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -15795,7 +15795,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 367
@@ -15898,17 +15898,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0112.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -15917,19 +15917,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -15948,7 +15948,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 374
@@ -16051,17 +16051,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0113.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -16070,19 +16070,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -16101,7 +16101,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 730
@@ -16204,17 +16204,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0114.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -16223,19 +16223,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -16254,7 +16254,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 517
@@ -16357,17 +16357,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0115.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -16376,19 +16376,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -16407,7 +16407,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 438
@@ -16510,19 +16510,19 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0116.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -16536,17 +16536,17 @@ processing c0116.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0117.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -16555,19 +16555,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -16586,7 +16586,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 308
@@ -16689,17 +16689,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0118.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -16708,19 +16708,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -16739,7 +16739,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 267
@@ -16842,17 +16842,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0119.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -16861,19 +16861,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -16892,7 +16892,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 281
@@ -16995,17 +16995,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0120.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -17014,19 +17014,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -17045,7 +17045,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 416
@@ -17148,17 +17148,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0121.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -17167,19 +17167,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -17198,7 +17198,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 435
@@ -17301,17 +17301,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0122.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -17320,19 +17320,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -17351,7 +17351,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 606
@@ -17454,17 +17454,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0123.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -17473,19 +17473,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -17504,7 +17504,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 635
@@ -17607,19 +17607,19 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0124.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -17633,17 +17633,17 @@ processing c0124.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0125.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -17652,19 +17652,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -17683,7 +17683,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 704
@@ -17786,17 +17786,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0126.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -17805,19 +17805,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -17836,7 +17836,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 318
@@ -17939,17 +17939,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0127.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -17958,19 +17958,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -17989,7 +17989,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 312
@@ -18092,17 +18092,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0128.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -18111,19 +18111,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -18142,7 +18142,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 824
@@ -18245,17 +18245,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0129.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -18264,19 +18264,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -18295,7 +18295,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 520
@@ -18398,17 +18398,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0130.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -18417,19 +18417,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -18448,7 +18448,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 427
@@ -18551,17 +18551,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0131.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -18570,19 +18570,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -18601,7 +18601,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 380
@@ -18704,17 +18704,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0132.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -18723,19 +18723,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -18754,7 +18754,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 582
@@ -18857,17 +18857,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0133.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -18876,19 +18876,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -18907,7 +18907,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 328
@@ -19010,17 +19010,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0134.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -19029,19 +19029,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -19060,7 +19060,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 377
@@ -19163,17 +19163,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0135.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -19182,19 +19182,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -19213,7 +19213,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 389
@@ -19316,17 +19316,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0136.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -19335,19 +19335,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -19366,7 +19366,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 303
@@ -19469,17 +19469,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0137.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -19488,19 +19488,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -19519,7 +19519,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 340
@@ -19622,17 +19622,17 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0138.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -19641,19 +19641,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -19672,12 +19672,12 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 588
 ~~~~SubStep3: [template: template the document ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0138_vvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0138_vvv.log]
 ----Step5: [loop_verbose_level: loop all different verbose level caller ]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
@@ -19692,7 +19692,7 @@ log_ref_file: ./reflogs/c0138_v.log
 ~~~~~SubStep2: [print:  ]
 v
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0138_v.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0138_v.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19706,7 +19706,7 @@ log_ref_file: ./reflogs/c0138_vv.log
 ~~~~~SubStep2: [print:  ]
 vv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0138_vv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0138_vv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19720,7 +19720,7 @@ log_ref_file: ./reflogs/c0138_vvv.log
 ~~~~~SubStep2: [print:  ]
 vvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0138_vvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0138_vvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19734,7 +19734,7 @@ log_ref_file: ./reflogs/c0138_vvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0138_vvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0138_vvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19748,7 +19748,7 @@ log_ref_file: ./reflogs/c0138_vvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0138_vvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0138_vvvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19762,7 +19762,7 @@ log_ref_file: ./reflogs/c0138_vvvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0138_vvvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0138_vvvvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19776,24 +19776,24 @@ log_ref_file: ./reflogs/c0138_vvvvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0138_vvvvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0138_vvvvvvv.log]
 ==Task3: [build/process_main_entry ==> process_case:  ]
 ---Step1:
 ~~~SubStep1: [reg:  ]
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0139.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -19802,19 +19802,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -19833,12 +19833,12 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 265
 ~~~~SubStep3: [template: template the document ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0139_vvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0139_vvv.log]
 ----Step5: [loop_verbose_level: loop all different verbose level caller ]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
@@ -19853,7 +19853,7 @@ log_ref_file: ./reflogs/c0139_v.log
 ~~~~~SubStep2: [print:  ]
 v
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0139_v.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0139_v.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19867,7 +19867,7 @@ log_ref_file: ./reflogs/c0139_vv.log
 ~~~~~SubStep2: [print:  ]
 vv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0139_vv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0139_vv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19881,7 +19881,7 @@ log_ref_file: ./reflogs/c0139_vvv.log
 ~~~~~SubStep2: [print:  ]
 vvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0139_vvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0139_vvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19895,7 +19895,7 @@ log_ref_file: ./reflogs/c0139_vvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0139_vvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0139_vvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19909,7 +19909,7 @@ log_ref_file: ./reflogs/c0139_vvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0139_vvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0139_vvvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19923,7 +19923,7 @@ log_ref_file: ./reflogs/c0139_vvvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0139_vvvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0139_vvvvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -19937,24 +19937,24 @@ log_ref_file: ./reflogs/c0139_vvvvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0139_vvvvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0139_vvvvvvv.log]
 ==Task3: [build/process_main_entry ==> process_case:  ]
 ---Step1:
 ~~~SubStep1: [reg:  ]
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing c0140.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -19963,19 +19963,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -19994,12 +19994,12 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 1288
 ~~~~SubStep3: [template: template the document ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0140_vvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0140_vvv.log]
 ----Step5: [loop_verbose_level: loop all different verbose level caller ]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
@@ -20014,7 +20014,7 @@ log_ref_file: ./reflogs/c0140_v.log
 ~~~~~SubStep2: [print:  ]
 v
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0140_v.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0140_v.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -20028,7 +20028,7 @@ log_ref_file: ./reflogs/c0140_vv.log
 ~~~~~SubStep2: [print:  ]
 vv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0140_vv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0140_vv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -20042,7 +20042,7 @@ log_ref_file: ./reflogs/c0140_vvv.log
 ~~~~~SubStep2: [print:  ]
 vvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0140_vvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0140_vvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -20056,7 +20056,7 @@ log_ref_file: ./reflogs/c0140_vvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0140_vvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0140_vvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -20070,7 +20070,7 @@ log_ref_file: ./reflogs/c0140_vvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0140_vvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0140_vvvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -20084,7 +20084,7 @@ log_ref_file: ./reflogs/c0140_vvvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0140_vvvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0140_vvvvvv.log]
 ====Task6: [build/process_main_entry/process_case/generate_doc ==> generate_log_pages: generage verbose level log ]
 -----Step1:
 ~~~~~SubStep1: [print:  ]
@@ -20098,7 +20098,7 @@ log_ref_file: ./reflogs/c0140_vvvvvvv.log
 ~~~~~SubStep2: [print:  ]
 vvvvvvv
 ~~~~~SubStep3: [template: generate the log ]
- WARN: [filecontent readfile] - [please fix file path: ./reflogs/c0140_vvvvvvv.log]
+ WARN: [fileContent readFile] - [please fix file path: ./reflogs/c0140_vvvvvvv.log]
 =Task2: [build ==> process_main_entry:  ]
 --Step1: [: prepare all the self documented cases ]
 cmd( 1):
@@ -20132,19 +20132,19 @@ f0117.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0001.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20158,19 +20158,19 @@ processing f0001.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0002.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20184,19 +20184,19 @@ processing f0002.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0009.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20210,19 +20210,19 @@ processing f0009.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0016.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20236,19 +20236,19 @@ processing f0016.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0018.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20262,19 +20262,19 @@ processing f0018.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0031.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20288,19 +20288,19 @@ processing f0031.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0037.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20314,17 +20314,17 @@ processing f0037.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0045.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ===Task4: [build/process_main_entry/process_case ==> data_enrich:  ]
 ----Step1:
-~~~~SubStep1: [yml_write:  ]
-~~~~SubStep2: [yml_write:  ]
-~~~~SubStep3: [yml_write:  ]
-~~~~SubStep4: [yml_write:  ]
+~~~~SubStep1: [ymlWrite:  ]
+~~~~SubStep2: [ymlWrite:  ]
+~~~~SubStep3: [ymlWrite:  ]
+~~~~SubStep4: [ymlWrite:  ]
 ~~~~SubStep5: [query:  ]
 ~~~~SubStep6: [print:  ]
 existing weight: 
@@ -20333,19 +20333,19 @@ weight string length: 0
 ----Step2:
 ~~~~SubStep1: [print:  ]
 setup weight
-~~~~SubStep2: [yml_write:  ]
+~~~~SubStep2: [ymlWrite:  ]
 ----Step3:
 ~~~~SubStep1: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [return:  ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20364,7 +20364,7 @@ cmd( 1):
 ----Step3: [: debug and exit ]
  WARN: [*] - [Step is deactivated!]
 ----Step4: [: generate the document ]
-~~~~SubStep1: [printobj:  ]
+~~~~SubStep1: [printObj:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~~SubStep2: [print: casedoc length ]
 446
@@ -20467,19 +20467,19 @@ vvvvvvv
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0053.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20493,19 +20493,19 @@ processing f0053.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0060.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20519,19 +20519,19 @@ processing f0060.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0061.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20545,19 +20545,19 @@ processing f0061.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0067.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20571,19 +20571,19 @@ processing f0067.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0077.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20597,19 +20597,19 @@ processing f0077.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0088.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20623,19 +20623,19 @@ processing f0088.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0097.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20649,19 +20649,19 @@ processing f0097.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0116.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]
@@ -20675,19 +20675,19 @@ processing f0116.yml
 ~~~SubStep2: [reg:  ]
 ~~~SubStep3: [print:  ]
 processing f0117.yml
-~~~SubStep4: [readfile: read yml file ]
+~~~SubStep4: [readFile: read yml file ]
 ~~~SubStep5: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep6: [query:  ]
 ---Step2: [: add casename and log_dir into data model ]
 ---Step3:
-~~~SubStep1: [readfile: review if the file content is correct ]
+~~~SubStep1: [readFile: review if the file content is correct ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep2: [print:  ]
  WARN: [cmd] - [temporarily deactivated]
-~~~SubStep3: [yml_delete:  ]
-~~~SubStep4: [yml_delete:  ]
-~~~SubStep5: [readfile: review if the file content is correct ]
+~~~SubStep3: [ymlDelete:  ]
+~~~SubStep4: [ymlDelete:  ]
+~~~SubStep5: [readFile: review if the file content is correct ]
 ~~~SubStep6: [print: show the modified yml content ]
  WARN: [cmd] - [temporarily deactivated]
 ~~~SubStep7: [:  ]

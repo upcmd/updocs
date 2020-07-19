@@ -15,13 +15,14 @@ usage: up [<flags>] <command> [<args> ...]
 UP: The Ultimate Provisioner
 
 Flags:
-      --help                   Show context-sensitive help (also try --help-long and --help-man).
-  -v, --verbose=VERBOSE        verbose level: v-vvvvv
-  -d, --refdir=REFDIR          ref yml files directory
-  -t, --taskfile=TASKFILE      task file to load (without yml extension)
-  -i, --instance=INSTANCE      instance name for execution
-      --configdir=CONFIGDIR    config file directory to load from|default .
-      --configfile=CONFIGFILE  config file name to load without yml extension|default config
+      --help                     Show context-sensitive help (also try --help-long and --help-man).
+  -v, --verbose=VERBOSE          verbose level: v-vvvvv
+  -d, --refdir=REFDIR            ref yml files directory
+  -t, --taskfile=TASKFILE        task file to load (without yml extension)
+  -i, --instance=INSTANCE        instance name for execution
+  -p, --execprofile=EXECPROFILE  profile name for execution to setup a group environment variables
+      --configdir=CONFIGDIR      config file directory to load from|default .
+      --configfile=CONFIGFILE    config file name to load without yml extension|default config
 
 Commands:
   help [<command>...]

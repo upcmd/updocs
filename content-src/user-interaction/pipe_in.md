@@ -11,7 +11,7 @@ You can use UPcmd to chain the command output as input and choose a task to hand
 
 This case shows that the output of a restapi call to http://httpbin.org/get will be the a pipe in input to UPcmd, then the result is automatically saved to register name: up_runtime_task_pipe_in_content
 
-Initially the input result is always a string, then we use to_object cmd to auto convert it to a object named my_http_get_response, then we will be able to access the whole object
+Initially the input result is always a string, then we use toObj cmd to auto convert it to a object named my_http_get_response, then we will be able to access the whole object
 
 Please note that the command will use the assigned task name for execution, however it is up to the user to design the workflow to decide how and what to use the register pipein value
 
@@ -47,12 +47,12 @@ tasks:
             desc: this is the pipe in string content
             cmd: '{{.up_runtime_task_pipe_in_content}}'
 
-          - name: to_object
+          - name: toObj
             cmd:
               reg: my_http_get_response
               fromkey: up_runtime_task_pipe_in_content
 
-          - name: printobj
+          - name: printObj
             desc: this is the pipe in object
             cmd: my_http_get_response
 
@@ -112,8 +112,8 @@ Task1: [task ==> task: process the stdin pipe-in data ]
   "url": "http://httpbin.org/get"
 }
 
-~SubStep3: [to_object:  ]
-~SubStep4: [printobj: this is the pipe in object ]
+~SubStep3: [toObj:  ]
+~SubStep4: [printObj: this is the pipe in object ]
 object:
  my_http_get_response: {
   "origin": "118.208.99.251",

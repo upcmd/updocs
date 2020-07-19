@@ -280,7 +280,7 @@ tasks:
           - name: pageurl
             value: '{{.baseurl}}{{.loopitem}}'
             flags:
-              - taskscope
+              - taskScope
         do:
           -
             name: print
@@ -302,7 +302,7 @@ tasks:
             curl -s {{.pageurl}} |grep ".pdf?up=" |awk '{split($0,a,"href="); print a[2]}'|awk '{split($0,a,"alt="); print a[1]}' |tr -d \" |grep -v "# "|awk '{$1=$1};1'
         reg: pdflinks
         flags:
-          - ignore_error
+          - ignoreError
 
       -
         func: cmd
@@ -355,7 +355,7 @@ tasks:
         func: cmd
         do:
           -
-            name: readfile
+            name: readFile
             cmd:
               filename: pdflinks
               dir: ./

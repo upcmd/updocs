@@ -66,7 +66,7 @@ tasks:
             do:
               - name: print
                 cmd: 'building OS: {{.os}}'
-              - name: colorprint
+              - name: colorPrint
                 cmd:
                   msg: ?? WARN - This is a build for testing purpose only. Enter to continue!
                   fg: red
@@ -187,7 +187,7 @@ tasks:
           - name: modcase
             value: '{{.loopitem}}'
             flags:
-              - taskscope
+              - taskScope
         do:
           - name: print
             cmd: 'case dir: {{.modcase}}'
@@ -237,7 +237,7 @@ tasks:
               relatedlink: ../../module/{{.modcase}}
               log_ref_file: {{.log_dir}}/m{{.modcase}}_{{.loopitem}}.log
             flags:
-              - to_object
+              - toObj
               - vvvvv
         do:
           - name: print
@@ -302,7 +302,7 @@ tasks:
           - name: print
             cmd: 'processing {{.casefilename}}'
 
-          - name: readfile
+          - name: readFile
             desc: read yml file
             cmd:
               filename: '{{.casefilename}}'
@@ -320,7 +320,7 @@ tasks:
               path: doc_meta.
               reg: docyml
             flags:
-              - ymlonly
+              - ymlOnly
 
       -
         func: call
@@ -332,7 +332,7 @@ tasks:
         func: cmd
         do:
 
-          - name: readfile
+          - name: readFile
             desc: review if the file content is correct
             cmdx:
               filename: '{{.casefilename}}'
@@ -348,7 +348,7 @@ tasks:
               {{.debug_yml}}
               ---
 
-          - name: yml_delete
+          - name: ymlDelete
             cmd:
               ymlfile: '{{.casefilename}}'
               refdir: '{{.ref_dir}}'
@@ -356,7 +356,7 @@ tasks:
             flags:
               - inplace
 
-          - name: yml_delete
+          - name: ymlDelete
             cmd:
               ymlfile: '{{.casefilename}}'
               refdir: '{{.ref_dir}}'
@@ -364,7 +364,7 @@ tasks:
             flags:
               - inplace
 
-          - name: readfile
+          - name: readFile
             desc: review if the file content is correct
             cmd:
               filename: '{{.casefilename}}'
@@ -383,7 +383,7 @@ tasks:
           - name: casedoc
             value: '{{.docyml}}'
             ex pand: 2
-            flags: [to_object, reg]
+            flags: [toObj, reg]
 
       -
         func: call
@@ -396,25 +396,25 @@ tasks:
     task:
       - func: cmd
         do:
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: casename
               value: '{{.casename}}'
               reg: docyml
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: ref_dir
               value: '{{.ref_dir}}'
               reg: docyml
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: main_yml_ref_file
               value: '{{.ref_dir}}/{{.casefilename}}'
               reg: docyml
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: main_log_ref_file
@@ -427,7 +427,7 @@ tasks:
               reg: weightstr
               path: weight.
             flags:
-              - ymlonly
+              - ymlOnly
 
           - name: print
             cmd: |
@@ -439,7 +439,7 @@ tasks:
           - name: print
             cmd: 'setup weight'
 
-          - name: yml_write
+          - name: ymlWrite
             cmd:
               ymlstr: '{{.docyml}}'
               path: weight
@@ -450,13 +450,13 @@ tasks:
       - func: cmd
         do:
 
-#          - name: yml_write
+#          - name: ymlWrite
 #            cmd:
 #              ymlstr: '{{.docyml}}'
 #              path: page_weight
 #              value: '{{ .casename |replace "c" "" |atoi}}'
 #              reg: docyml
-#          - name: yml_write
+#          - name: ymlWrite
 #            cmd:
 #              ymlstr: '{{.docyml}}'
 #              path: log_dir
@@ -508,7 +508,7 @@ tasks:
         func: cmd
         desc: debug and exit
         dox:
-          - name: printobj
+          - name: printObj
             cmd: casedoc_object
 #          - name: exit
         if: '{{eq .casename "c0009"}}'
@@ -517,7 +517,7 @@ tasks:
         func: cmd
         desc: generate the document
         do:
-          - name: printobj
+          - name: printObj
             cmdx: casedoc_object
 
           - name: print
@@ -563,7 +563,7 @@ tasks:
               relatedlink: ../../{{.casedoc_object.folder}}/{{.casename}}
               log_ref_file: {{.log_dir}}/{{.casename}}_{{.loopitem}}.log
             flags:
-              - to_object
+              - toObj
               - vvvvv
         do:
           - name: print

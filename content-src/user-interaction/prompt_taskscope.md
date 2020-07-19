@@ -1,5 +1,5 @@
 ---
-title: "prompt in taskscope"
+title: "prompt in taskScope"
 date: 2020-06-25T22:32:46+11:00
 draft: false
 weight: 1785
@@ -25,12 +25,12 @@ tasks:
           - name: fist_name
             flags:
               - prompt
-              - taskscope
+              - taskScope
 
           - name: last_name
             value: hanks
             flags:
-              - taskscope
+              - taskScope
         do:
           - |
             echo """my name is: {{.fist_name}} {{.last_name}}"""
@@ -75,4 +75,4 @@ my name is: tom hanks
 my name is: tom hanks
 ```
 
-This shows that you are ask to provide a value of dvar first_name, the input value is "tom", so the first_name is now assigned value of tom, since the dvar is flaged with taskscope, it means the value of first_name is accessible accross different funcs in this task
+This shows that you are ask to provide a value of dvar first_name, the input value is "tom", so the first_name is now assigned value of tom, since the dvar is flaged with taskScope, it means the value of first_name is accessible accross different funcs in this task

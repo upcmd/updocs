@@ -20,7 +20,7 @@ weight: {{.weight}}
 
 {{ if $x.filelookup }}
 ```
-{{ printf "%s/%s/%s" $.cached_modtests_dir $.modcase $x.filelookup|filecontent|indent 4}}
+{{ printf "%s/%s/%s" $.cached_modtests_dir $.modcase $x.filelookup|fileContent|indent 4}}
 ```
 {{ end }}
 
@@ -38,7 +38,7 @@ weight: {{.weight}}
 ##### Main log file
 
 ```
-{{ printf "%s%s%s.log" "./reflogs/m" .modcase "_v" |filecontent|indent 4}}
+{{ printf "%s%s%s.log" "./reflogs/m" .modcase "_v" |fileContent|indent 4}}
 ```
 
 ##### Logs with different verbose level

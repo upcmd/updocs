@@ -20,7 +20,7 @@ weight: {{.weight}}
 
 {{ if $x.filelookup }}
 ```
-{{ printf "%s/%s" $.ref_dir $x.filelookup|filecontent|indent 4}}
+{{ printf "%s/%s" $.ref_dir $x.filelookup|fileContent|indent 4}}
 ```
 {{ end }}
 
@@ -29,11 +29,11 @@ weight: {{.weight}}
 
 ##### Main task yaml file
 ```
-{{ $.main_yml_ref_file |filecontent|indent 4}}
+{{ $.main_yml_ref_file |fileContent|indent 4}}
 ```
 ##### Main log file
 ```
-{{ $.main_log_ref_file |filecontent|indent 4}}
+{{ $.main_log_ref_file |fileContent|indent 4}}
 ```
 
 {{ if $x.log }}
