@@ -38,7 +38,7 @@ Commands:
     list tasks and plays
 
   assist [<assistname>]
-    assist: templatefunc|
+    assist: templatefunc|version
 
   validate <validatetaskname>
     validate tasks and plays
@@ -89,4 +89,34 @@ tasks:
         desc: main job
         do:
           - echo "hello world"
+```
+
+#### Check version
+
+```
+▶ up assist version
+loading [Config]:  ./upconfig.yml
+Main config:
+             Version -> 1.0.0
+              RefDir -> .
+             WorkDir -> cwd
+          AbsWorkDir -> /up-project/up
+            TaskFile -> up.yml
+             Verbose -> v
+          ModuleName -> self
+           ShellType -> /bin/sh
+       MaxCallLayers -> 8
+ MaxModuelCallLayers -> 256
+work dir: /up-project/up
+-assist: version
+
+version_info:
+  Type: tagged-version
+  Tag: 0.9.1
+  Vesion: 0.9.1
+  SHA: f8e54f33074a1e1e57e6da93697533aa404695fd
+  Source: https://github.com/upcmd/up/tree/f8e54f33074a1e1e57e6da93697533aa404695fd
+  Changes: |
+    1. Version query support via: up assist version  
+
 ```
