@@ -40,8 +40,8 @@ Commands:
   assist [<assistname>]
     assist: templatefunc|version
 
-  validate <validatetaskname>
-    validate tasks and plays
+  dryrun <dryruntaskname>
+    dryrun tasks and plays
 
 ```
 

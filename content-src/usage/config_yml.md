@@ -59,6 +59,10 @@ Without it, you will need to specify a task name in your CLI command
 
 Please ref to:  [CLI command line args](../../usage/cli_args) for details
 
+* Timeout: This is the default setting of the timeout value(milli seconds) for shell func
+
+For every shell command call, if there is no explicit timeout setting, it will use the default value of 1 hour, or you can override this in your config settings
+
 * ConfigDir: This is the default directory preferred to save your upconfig.yml
 
 You could simply make default to current directory, so that you could have a project based configuration, or you could use a global config, eg: ~/.up/upconfig.yml for all projects
