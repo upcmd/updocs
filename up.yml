@@ -7,6 +7,7 @@ vars:
   log_dir: ./reflogs
   content_dir: ./content
   content_src_dir: ./content-src
+  charpter_file: /tmp/chap
 
 dvars:
   - name: upproj_dir
@@ -30,7 +31,110 @@ dvars:
     value: '{{.content_dir}}/logs'
 
 
+notes:
+  - data_format:
+      - page_nav_structure: |
+          ~SubStep1: [printObj:  ]
+            loopitem: {
+              "data-nav-id": "/loop/",
+              "tag": "li",
+              "title": "loop",
+              "children": {
+                {
+                  "text": "loop",
+                  "href": "/loop/",
+                  "tag": "a"
+                },
+                  {
+                  "tag": "ul",
+                  "children": {
+                    {
+                      "class": "dd-item ",
+                      "data-nav-id": "/loop/c0090/",
+                      "tag": "li",
+                      "title": "loopitem in dvar",
+                      "children": {
+                        {
+                          "href": "/loop/c0090/",
+                          "tag": "a",
+                          "text": "loopitem in dvar"
+                        }
+                      }
+                    },
+                      ...................
+
 tasks:
+
+  -
+    name: Gen_user_manual
+    desc: build chapters index
+    task:
+      -
+        func: shell
+        vars:
+          page: /tmp/tmp.html
+        do:
+          - 'curl https://upcmd.netlify.app/usage/ -o {{.page}}'
+          - |
+            cat {{.page}} |pup '#sidebar > div.highlightable.ps-container.ps-theme-default > ul > li json{}'
+            rm -f {{.charpter_file}}
+
+        reg: result
+
+      - func: cmd
+        dvars:
+          - name: page_json
+            value: '{{ .result.Output }}'
+            flags:
+              - toObj
+              - taskScope
+        do:
+          - name: printObj
+            cmd: page_json_object
+
+      - func: cmd
+        dox:
+          -
+            name: inspect
+            cmd:
+              - exec_vars
+
+
+      - func: block
+        loop: 'page_json_object'
+        do:
+          - func: block
+            if: '{{ne (index .loopitem "data-nav-id") "/logs/"}}'
+            dvars:
+              - name: charpters
+                value: |
+                  ### Chapter {{add .loopindex 1}} [{{- .loopitem.title}}]({{index .loopitem "data-nav-id" -}})
+                  {{ print "" }}
+                  {{- range $idx,$subitem :=.loopitem.children }}
+                    {{- if eq $idx 1 }}
+                      {{- range $id,$subchap := $subitem.children }}
+                    {{add $id 1}}. [{{- $subchap.title }}]({{index $subchap "data-nav-id" -}})
+                      {{- end}}
+                    {{- end}}
+                  {{- end}}
+            do:
+              - func: shell
+                do: |
+                  echo """{{.charpters}}"""
+                  echo """{{.charpters}}""" >> {{.charpter_file}}
+
+          - func: shell
+            do: |
+              cat {{.charpter_file}}
+
+          - func: cmd
+            do:
+              -
+                name: template
+                desc: render charpters
+                cmd:
+                  src: ./templates/home_page.template
+                  dest: '{{.content_src_dir}}/_index.md'
 
   -
     name: facts

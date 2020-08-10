@@ -4,432 +4,273 @@ date: 2020-06-25T22:32:46+11:00
 draft: false
 ---
 
-# UPcmd [docs site](https://upcmd.netlify.app/)
-
-The Ultimate Provisioner: the modern configuration management, build and automation tool
-
-## [UPcmd  - The Ultimate Provisioner](https://upcmd.netlify.app/usage/cli_usage/)
-
-UP is designed and implemented to shine as a modern tool for below:
-
-  * Configuration management
-  * Build, continuously delivery, integration with ci/cd
-  * Comprehensive workflow orchestration: full support of almost all type of condition, loop(recursive), break
-  * Flexible configuration organisation
-  * No dependency hell issue
-  * Precise modeling, data is object, object is the data
-  * Design of composition, separate func type, data and implementation
-  * Use inteface(call func) for abstraction of intention, data input and implementation
-  * Many builtin dry run, assert, debugging features for the insights, developer friendly
-  * ... many more for you to discover, check out the docs
-
-It is a build tool like Ansible, Make, Rake, Ant, Gradle, Puppet, Taskfile etc, but it is a little smarter to try to make things a little easier
-
-The goal of UP is to provide a quick (I'd say the quickest) solution to enable continuously integration and continuously deployment (CI/CD). It is simple to use and yet powerful to achieve many common challenges nowadays devops face in the Cloud environment
-
-It is designed with mindful consideration of collaboration with automation in Kubernetes, helm charts, api call
-
-It is also put best practice of integration with common CI/CD tools, such as GOCD, Jenkins, Drone, Gitlab CI and so on and be a good company of all different types of CLI tools
-
-It is bringing a fun DSL programming, a way of modeling and engineering into CLI and enable OO design and fast test driven development and delivery cycle
-
-* Hello, world
-
-```
-tasks:
-  -
-    name: task
-    task:
-      -
-        func: shell
-        do:
-          - echo "hello, world"
-```
-
-* Appetizers
-
-Below shows:
-
-* It is a simple deployment of a web application, it has a prior step of database deployment
-* The database deployment will depend on the db configuration base on per environment
-* the non prod envs: staging and dev share the same database configurations using a shared database 
-* the non prod envs: staging and dev each individually will use different database host name though
-* a dvar db_password using aes to manage the password   
-
-To deploy, simply specify a instanceid to be associated with an environment, eg: dev, staging or prod
-
-```
-up ngo -i staging
-```  
-
-The config: 
-``` 
-
-scopes:
-- name: global
-  vars:
-    db_driver: postgres
-    port: 5432
-
-- name: nonprod
-  members:
-  - dev
-  - staging
-  vars:
-    db_host: nonpord_database.test.host
-    db_user: test_db_user
-    db_password: could_be_encrypted_using_upcmd_too
-  dvars:
-    - name: db_password
-      value: '6HmsmiJIW1PfIXcF4WwOKOMDiL7PstgfKs2aRFajrwY='
-
-- name: prod
-  members: [prod]
-  vars:
-    host_alias: prod
-
-- name: dev
-  vars:
-    host_alias: dev
-
-- name: staging
-  vars:
-    host_alias: staging
-
-- name: prod
-  vars:
-    host_alias: prod
-    db_host: pord_database.proddb.host
-    db_user: prod_db_user
-  dvars:
-    - name: db_password
-      value: 'prod_encrypte_aes'
-
-dvars:
-  - name: db_hostname
-    value: '{{.host_alias}}.myapp.com'
-  - name: db_url
-    value: 'jdbc:{{.db_driver}}://{{.db_hostname}}:{{.db_port}}/test?user={{.db_user}}&password={{.db_password}}&ssl=true'
-
-tasks:
-  -
-    name: Main
-    desc: deploy my web app stack
-    task:
-      -
-        func: call
-        do:
-          - deploy_database
-          - deploy_web
-
-      -
-        func: shell
-        do:
-          - systemctl start my_database 
-          - systemctl start my_web_server
-
-  -
-    name: deploy_web
-    task:
-      -
-        func: shell
-        do:
-          - deploy myweb_server
-
-  -
-    name: deploy_database
-    task:
-      -
-        func: shell
-        do:
-          - deploy mydatabase
-
-```
-
-With the evolving of the up.yml file, you could externalize the configuration to individual files or make them as module to be reused or shared. Please check out the doc for more details.
-
-### High level design
-
-In high level, UPcmd is processing like below:
-
-* The process engine process the scope vars and merge them with global vars, then in the run time it will merge with local vars again
-* For the callee task, the local vars will be overriden by the vars passed from caller task
-    
-![high level design](https://raw.githubusercontent.com/upcmd/updocs/master/static/up_high_level.png)
-
-### Possible applications
-
-UPcmd is a generic automation tool, as long as your automation works in SHEL. You do not need SHELL executable though, as it has default GOSH builtin just in case you will need one to fall back to.
-
-There could be application as below, but not limit to: 
-* Build, package, publish, test, deploy for all different types of applications in your local machine, or integrate with CI/CD tools/pipeliens
-* UPcmd could be used as tool/platform/pipelien agnostic abstration layer, leave the most configuration to UPcmd to manage as an execution profile, expose only the profileid to be linked with the tool, eg: jenkins/gitlab ci, so that all your automation is portable. In case you need to switch from on to another, you don't need to rewrite all the automation. In this case, UPcmd's configured tasks could be regarded as pipeline as code.  
-* A collection of util like (tool box) for local machine automation, for example, 
-    1. bootstrap the whole Macbook with all upgraded packages, setup all your dotfiles
-    2. bootstrap the whole Linux box/virtual VM/vagrant box/docker container
-* Create CLI program, prompt with user input, encrypt/decrypt secrets
-* Web service/rest api call and message transformation
-* Cloud service provisioning, eg drive complicated workflow to manage to create full application stack in AWS or k8s cluster, utilise and integrate with other CLI commands, such as packer, aws cli, kubectl, helm, terraform
-* Reuse/consume or share modules to deal with a particular use case. 
-* Resolve the dependencies issue by simply invoking different version of the relevant CLI/docker run
-* The orchestration of UPcmd task itself could be seen as prototyping tool and design tool, or use the defined workflow as skeleton to guide the implementation from different part        
-
-### Quick install
-
-#### Install the binary
-
-There are 32 different distro for different combination of OS and Arch type, check them out: [release](https://github.com/upcmd/up/releases)
-
-Below are common one for latest tagged stable release:
-
-* Install for Mac OSX:
-
-```
-curl -s https://api.github.com/repos/upcmd/up/releases \
-    |grep darwin_amd64 \
-    |grep download \
-    |head -n 1 \
-    |awk '{print $2}' \
-    |xargs -I % curl -L % -o up \
-    && chmod +x up
-```
-
-* Install for Linux:
-
-```
-curl -s https://api.github.com/repos/upcmd/up/releases \
-    |grep linux_amd64 \
-    |grep download \
-    |head -n 1 \
-    |awk '{print $2}' \
-    |xargs -I % curl -L % -o up \
-    && chmod +x up
-```
-
-* Install for Windows:
-
-```
-curl -s https://api.github.com/repos/upcmd/up/releases \
-    |grep windows_amd64 \
-    |grep download \
-    |head -n 1 \
-    |awk '{print $2}' \
-    |xargs -I % curl -L % -o up \
-    && chmod +x up
-```
-
-Move the downloaded UP command executable to an executable path, eg. /usr/local/bin, so you can use it system wide
-
-#### Install from source
-
-Ensure you use go 1.14 (prefered)
-
-```
-go install github.com/upcmd/up/app/up
-```
-
-The up CLI command will be installed to: $HOME/go/bin, make sure you have this in your PATH
-
-#### Usage: followup the detailed documentation site: [https://upcmd.netlify.app/](https://upcmd.netlify.app/usage/cli_usage/)
-
-### A little taste of UPcmd
-
-Below shows a simple greeting example, also shows list, inspect and execution of the task
-
-* With some smarts: logic and loop etc [doc](https://upcmd.netlify.app/quick-start/c0151/) | [source](https://github.com/upcmd/up/blob/master/tests/functests/c0151.yml)
-
-This shows:
-* the greet task is an implementation, by default it was called with default global var greet_to value, but with supply of local var of "Grace", it changes the behaviour [see concept of interface](https://upcmd.netlify.app/call-func/c0020/)
-* loop through
-* if/else logic 
-* chain through tasks
-
-```
-
-Vars:
-  greet_to: Tom
-  weather: sunny
-
-tasks:
-  -
-    name: task
-    desc: main task of hello world demo of UPcmd
-    task:
-      -
-        func: call
-        desc: greet to Tom
-        do:
-          - greet
-
-      -
-        func: call
-        desc: greet to Grace
-        vars:
-          greet_to: Grace
-        do:
-          - greet
-
-
-      -
-        func: cmd
-        desc: do  you get the idea?
-        do:
-          - name: print
-            cmd: |
-              Have you got a little taste of using the UPcmd?
-
-      -
-        func: call
-        desc: greet to a team
-        vars:
-          team:
-            - Jason
-            - Connie
-          weather: stormy
-        loop: team
-        do:
-          - sayhi
-
-  -
-    name: greet
-    desc: greet to some one
-    task:
-      -
-        func: shell
-        desc: say hello
-        do:
-          - echo "Hello, {{.greet_to}}"
-
-      -
-        func: cmd
-        desc: talk about weather
-        do:
-          - name: print
-            cmd: 'It is {{.weather}}'
-
-      -
-        func: cmd
-        desc: ice break
-        do:
-          - name: print
-            cmd: 'What a great day!'
-        if: '{{eq .weather "sunny"}}'
-        else:
-          -
-            func: cmd
-            do:
-              - name: print
-                cmd: 'What a bad day!!'
-
-  -
-    name: sayhi
-    desc: say hi to some one
-    task:
-      -
-        func: cmd
-        desc: say hi to someone
-        do:
-          - name: print
-            cmd: 'Hi {{.loopitem}}, how are you?'
-
-      -
-        func: call
-        desc: greet to the team member
-        dvars:
-          - name: greet_to
-            value: '{{.loopitem}}'
-        do:
-          - greet
-
-```
-
-![A little taste](https://raw.githubusercontent.com/upcmd/updocs/master/static/a_little_taste.png)
-
-### Demo
-
-It demos:
-* create upcmd task skeleton using init command
-* show the intro demo code and execution
-* use module
-* test driven, assert and color print
-
-Check it out yourself: [source](https://github.com/upcmd/up-demo/blob/master/demo.sh) and try to have fun to run though the examples by yourself
-
-![demo](https://raw.githubusercontent.com/upcmd/up-demo/master/intro.gif)
-
-###  Why yet another build tool
-
-* Make was initially designed and used for building C program, even though it could be adopted for other purpose, some of the hard to learn trivials often cause problems than the benefits added to the team, and it is burning the brain. It is hard to make automation task extended to a more advanced level, readbility degrades rapidly and it is risky to implement critical logic using Make. Make is just a little old for modern business requirements. (Sorry, maybe this is just from some one not good at using Makefile)
-
-* Rake is smart and powerful. If you don't mind learning a little bit of Ruby, it is a good choice of building tool. Similarly to Ant, Gradle. They are all bind to a language specific, it is just not right when it comes to the case that you want to automate things in cloud environment. In most of cases when it requires automation in a cloud environment, in a given spun up AWS EC2 instance, a shell session, a kubernete pod, you would want some thing just works without any dependencies. You simply do not want to mantain the consistency of chain of upgrding path for all language pkgs in multiple environments. In these cases, Rake, Gradle, Ant are not best options.
-
-* Ansible, Puppet are configuration management tools. They are powerful, there are many builtin well tested modules you could use. However Ansible might be too huge for little job and most of the time it tends to over kill, also it suffers the same problem of python/python packages dependencies.
-
-  A common usage of Ansible for many teams is to use the local ssh execution with group/host vars for templating and workflow automation, which is simply not right. Also the way the vars being managed is not fine grained. The ansible role as a reusable module is not flexible to implement more complicated tasks.
-
-* Inspired by https://taskfile.dev/,  it is tiny tool making build and automation easier and elegant, however it lacks some of the features in a practical cloud environment for CI/CD, devops automation, hence this project is born for that purpose
-
-### Features
-
-1. Drop in replacement for Makefile, but way more powerful. It uses a composition model rather than dependency model for flexibility/composibility
-2. Implemented in golang, so no dependency hell, no maintenance of runtime and ensure the version consistency across multiple/many execution contexts
-3. Use scopes to manage group of execution context, the variables associated with the scope. Fine grained scoping model to support variable auto overriding/merging. Similar to Ansible global/group vars, host vars, but more powerful to support leaf level objects auto merging
-4. Use dvar - dynamic var, a special design to achieve many incredible features, for example:
-    * manage security: encrypt/decrypt, like ansible-vault, builtin
-    * dynamics on dynamics: it allows you to specify how many layers of expansion you'd like to dynamically render a variable
-    * builtin templating capability
-    * use golang template, supporting all(220+) (builtin|sprig|gtf) funcs/pipeline so that your configuration could be well controlled in template using objects
-    * auto message transformation between yaml|json result to object used internally
-    * conform the hierarchical scoping model for var merging to leaf level
-    * manage setup/read env vars in the same scoping model so that you could have seamless integration with minimal exposed demanding ENV vars from CD/CI tool
-    * auto validation for mandatory vars
-5. Color print and adjustable verbose level
-6. Flexible programming model to allow you to separate implementation with interface so that common code could be reused via task_ref
-Allow empty skeleton to be laid for testing driving process or guide as seudo code, but fill in the details and implementation gradually
-7. Flow control:
-      * ignoreError
-      * dry run
-      * if condition support
-      * loop support to iterate through a list of items
-      * mult-layered loop and break
-      * block and embedded block of code for execution
-8. Flexible configuration style to load dvar, scope, flow from external yaml so that the programming code will be a little cleaner and organised. Your code could evolve starting from simple, then externalize detailed implementation to files.
-9. Support the unlimited yml object, so yml config in var is text and it is also object.It could be merged in scopes automatically, it could be processed using go template
-10. Battery included for common builtin commands: print, reg, dereg, template, readFile, writeFile
-11. Builtin yml liter and object query, modification
-12. Call func is really shining powerful design to be used:
-    * Compose the sequential execution of block of code
-    * Use the stack design, so it segregates all its local vars so that the vars used in its implementation will not pollute the caller's vars
-    * It serves like a interface to separates the goal and implementation and makes the code is reusable
-13. The shell execution binary is configurable, builtin support for GOSH (mvdan.cc/sh). This means that you do not need native shell/bash/zsh installed in order for task execution, you can run task from a windows machine.
-14. It provides a module mechanism to encourage community to share modular code so that you do not need to reinvent the wheel to develop the same function again
-
-### Real Examples
-
-Both UPcmd project build and the docs entire site build use the UPcmd itself
-
-##### Project release for UPcmd [source](https://github.com/upcmd/up/blob/master/up.yml)
-```
-up ngo publish
-```
-
-##### Documentation [doc site](https://upcmd.netlify.app/)
-
-build of the entire doc site using one build task: 
-* [source](https://github.com/upcmd/updocs/blob/master/up.yml)
-* [details](https://upcmd.netlify.app/advanced-cases/upcmd-doc-gen/)
-
-##### A web scripting example [how?](https://upcmd.netlify.app/advanced-cases/web-scraping/)
-
-### Testing
-
-There are over 200~ test cases, every release come with a full passed regression test of all cases defined, [source](https://github.com/upcmd/up/tree/master/tests)
-
-* [common examples](https://github.com/upcmd/up/tree/master/tests/functests)
-* [module usage examples](https://github.com/upcmd/up/tree/master/tests/modtests)
-
-These test cases are not only about the tests, they are the usage examples with documentation self explaned
-
-### License
-
-This project is under MPL-2.0 License
+# UPcmd [github source](https://github.com/upcmd/up)
+
+## User Manual
+
+### Chapter 1 [installation and usage](/usage/)
+
+  1. [command line basics](/usage/cli_usage/)
+  2. [list tasks](/usage/list_tasks/)
+  3. [config yml](/usage/config_yml/)
+  4. [command args](/usage/cli_args/)
+  5. [public and protected tasks](/usage/c0140/)
+  6. [working directory](/usage/c0144/)
+
+### Chapter 2 [quick start](/quick-start/)
+
+  1. [First task - hello world](/quick-start/c0001/)
+  2. [Multiple Steps](/quick-start/c0002/)
+  3. [Yaml literal](/quick-start/c0003/)
+  4. [Use array](/quick-start/c0004/)
+  5. [manage dependencies](/quick-start/c0005/)
+  6. [call func (power up)](/quick-start/c0104/)
+  7. [use env var](/quick-start/c0006/)
+  8. [syntax variation](/quick-start/c0007/)
+  9. [a little taste of UPcmd](/quick-start/c0151/)
+
+### Chapter 3 [vars](/vars/)
+
+  1. [Use variables](/vars/c0012/)
+  2. [vars in func](/vars/c0013/)
+  3. [variables in callee](/vars/c0014/)
+  4. [use vars](/vars/c0019/)
+  5. [use golang template](/vars/c0021/)
+  6. [var rendering](/vars/c0022/)
+  7. [local vars](/vars/c0035/)
+  8. [local vs reg global](/vars/c0076/)
+  9. [var scope and accessibility](/vars/c0105/)
+  10. [var scope in callee](/vars/c0106/)
+  11. [task scope](/vars/c0108/)
+  12. [taskScope vars in callee](/vars/c0109/)
+  13. [local vars from file](/vars/c0146/)
+  14. [use pure local vars](/vars/c0147/)
+  15. [taskScope vars in block](/vars/c0148/)
+  16. [probe exisitence of path](/vars/c0154/)
+
+### Chapter 4 [call func](/call-func/)
+
+  1. [assemble worlflow](/call-func/c0017/)
+  2. [call func as interface](/call-func/c0020/)
+  3. [overriden in callee](/call-func/c0111/)
+  4. [multiple layers overriding](/call-func/c0112/)
+  5. [return values](/call-func/c0113/)
+  6. [sequence matters in return 1](/call-func/c0114/)
+  7. [sequence matters in return 2](/call-func/c0115/)
+  8. [chained calls and return values](/call-func/c0150/)
+
+### Chapter 5 [scope](/scope/)
+
+  1. [vars intro](/scope/c0008/)
+  2. [externalize settings](/scope/c0009/)
+  3. [leave merge](/scope/c0010/)
+  4. [runtime merge](/scope/c0011/)
+
+### Chapter 6 [dvars](/dvars/)
+
+  1. [dvars intro](/dvars/c0023/)
+  2. [complext object](/dvars/c0024/)
+  3. [string literal](/dvars/c0025/)
+  4. [convert dvar](/dvars/c0027/)
+  5. [externalize settings](/dvars/c0028/)
+  6. [dvars in scopes](/dvars/c0029/)
+  7. [complex case](/dvars/c0030/)
+  8. [leave level merge](/dvars/c0031/)
+  9. [instance level merge](/dvars/c0032/)
+  10. [local scope merge](/dvars/c0033/)
+  11. [dvars in call](/dvars/c0034/)
+  12. [dynamics on dynamics](/dvars/c0050/)
+  13. [load file using dvar](/dvars/c0070/)
+  14. [dvar to global](/dvars/c0078/)
+  15. [datakey as source](/dvars/c0082/)
+  16. [void for action](/dvars/c0086/)
+  17. [load from refdir](/dvars/c0088/)
+  18. [datapath](/dvars/c0098/)
+  19. [datatemplate](/dvars/c0099/)
+
+### Chapter 7 [golang template](/template/)
+
+  1. [builtin funcs](/template/c0036/)
+  2. [sprig funcs](/template/c0037/)
+  3. [gtf funcs](/template/c0038/)
+  4. [advanced usage](/template/c0039/)
+  5. [use loop](/template/c0040/)
+  6. [range and outer value](/template/c0075/)
+  7. [UPcmd internal template funcs](/template/upcmd_template_funcs/)
+  8. [all template funcs](/template/list_all_template_funcs/)
+  9. [splitLines func](/template/c0085/)
+  10. [type compare](/template/c0162/)
+  11. [yml obj json conversion](/template/c0165/)
+
+### Chapter 8 [shell func](/shell-func/)
+
+  1. [register result](/shell-func/c0026/)
+  2. [check result](/shell-func/c0041/)
+  3. [ignore error](/shell-func/c0052/)
+
+### Chapter 9 [design patterns](/design-patterns/)
+
+  1. [workflow skeleton](/design-patterns/c0043/)
+  2. [basic cli skeleton](/design-patterns/c0047/)
+  3. [data structure](/design-patterns/c0079/)
+  4. [modular tasks](/design-patterns/c0080/)
+  5. [externalise task def](/design-patterns/c0081/)
+  6. [func and vars](/design-patterns/func_and_vars/)
+  7. [design patterns](/design-patterns/design_patterns/)
+  8. [private var scope](/design-patterns/c0094/)
+
+### Chapter 10 [environment vars](/env-vars/)
+
+  1. [basics](/env-vars/c0044/)
+  2. [client validation](/env-vars/f0045/)
+  3. [environment vars](/env-vars/c0046/)
+  4. [declare env var](/env-vars/c0048/)
+  5. [env vars in scopes](/env-vars/c0049/)
+
+### Chapter 11 [security](/security/)
+
+  1. [builtin en/decryption](/security/c0051/)
+
+### Chapter 12 [flow controll](/flow-controll/)
+
+  1. [if condition](/flow-controll/c0054/)
+  2. [if condition advanced](/flow-controll/c0055/)
+  3. [use pause](/flow-controll/c0063/)
+  4. [Exit result per step](/flow-controll/c0068/)
+  5. [dynamic routing](/flow-controll/c0092/)
+  6. [dynamic routing extra](/flow-controll/c0093/)
+  7. [loopitem in callee&#39;s dvar](/flow-controll/c0110/)
+  8. [use break in call](/flow-controll/c0121/)
+  9. [non-exist value if](/flow-controll/c0122/)
+  10. [indirect reference](/flow-controll/c0123/)
+  11. [else in hard way](/flow-controll/c0126/)
+  12. [else branch](/flow-controll/c0127/)
+  13. [else with a flow](/flow-controll/c0131/)
+  14. [None value](/flow-controll/c0157/)
+  15. [final cleanup when shell exceution fails](/flow-controll/f0171/)
+  16. [final cleanup without resuce](/flow-controll/f0172/)
+  17. [guaranteed final step to ensure clean up/rescue](/flow-controll/c0172/)
+  18. [finally steps block](/flow-controll/c0173/)
+  19. [conditionally error handling](/flow-controll/c0174/)
+  20. [finally/resuce support in task level](/flow-controll/c0175/)
+
+### Chapter 13 [loop](/loop/)
+
+  1. [loopitem in dvar](/loop/c0090/)
+  2. [multi-layers loop 1](/loop/c0091/)
+  3. [multi-layers loop 2](/loop/c0117/)
+  4. [loop with condition](/loop/c0118/)
+  5. [condition with until](/loop/c0119/)
+  6. [break recursive loop](/loop/f0125/)
+  7. [loop usage guide](/loop/c0056/)
+  8. [loop with var name](/loop/c0167/)
+  9. [loop with range iterator](/loop/c0168/)
+  10. [loop and retry example](/loop/c0169/)
+
+### Chapter 14 [config organization](/organization/)
+
+  1. [ref task](/organization/c0059/)
+  2. [use case 1](/organization/c0060/)
+  3. [use case 2](/organization/c0061/)
+  4. [use tasksref](/organization/c0062/)
+  5. [load from refdir](/organization/c0089/)
+  6. [config file loading](/organization/config_file/)
+
+### Chapter 15 [cmd func](/cmd-func/)
+
+  1. [print message](/cmd-func/c0064/)
+  2. [reg and deReg](/cmd-func/c0066/)
+  3. [read/write file](/cmd-func/c0071/)
+  4. [sleep](/cmd-func/c0087/)
+  5. [toObj](/cmd-func/c0095/)
+  6. [delete in yml file](/cmd-func/c0102/)
+  7. [modify yml content](/cmd-func/c0103/)
+  8. [break cmd](/cmd-func/c0120/)
+  9. [color print](/cmd-func/c0142/)
+  10. [template using data file](/cmd-func/c0145/)
+
+### Chapter 16 [block func](/block-func/)
+
+  1. [use block](/block-func/c0128/)
+  2. [embeded block](/block-func/c0129/)
+  3. [block in else](/block-func/c0130/)
+  4. [call task from block](/block-func/c0134/)
+  5. [call block from task](/block-func/c0135/)
+  6. [testcase1 for block](/block-func/c0136/)
+  7. [test case 1](/block-func/c0159/)
+  8. [test case 2](/block-func/c0160/)
+  9. [test case 3](/block-func/c0161/)
+  10. [complicated test case 4](/block-func/c0163/)
+  11. [complicated test case 5](/block-func/c0164/)
+
+### Chapter 17 [templating](/templating/)
+
+  1. [templating using dvar](/templating/c0069/)
+  2. [use template cmd](/templating/c0072/)
+  3. [datakey and datapath](/templating/c0096/)
+
+### Chapter 18 [test and debug](/test-debug/)
+
+  1. [verbose flag](/test-debug/c0065/)
+  2. [pause and inspect](/test-debug/c0101/)
+  3. [ues trace](/test-debug/c0107/)
+  4. [assert and inspect](/test-debug/c0132/)
+  5. [failFast](/test-debug/c0133/)
+  6. [deactivated step](/test-debug/c0137/)
+  7. [deactivated sub step in cmd](/test-debug/c0138/)
+  8. [fail](/test-debug/c0139/)
+  9. [error handling](/test-debug/error_handling/)
+
+### Chapter 19 [user interaction](/user-interaction/)
+
+  1. [profile with env vars](/user-interaction/c0153/)
+  2. [externise exec profile](/user-interaction/c0158/)
+  3. [prompt in taskScope](/user-interaction/prompt_taskscope/)
+  4. [user prompt](/user-interaction/prompt_basic/)
+  5. [chained pipein from stdin](/user-interaction/pipe_in/)
+  6. [profile with env vars logs](/user-interaction/exec_profile/)
+  7. [exec profile example](/user-interaction/exec_profile_eg1/)
+
+### Chapter 20 [object oriented](/object-oriented/)
+
+  1. [reg/deReg/void](/object-oriented/c0042/)
+  2. [parse yml to object](/object-oriented/c0074/)
+  3. [query](/object-oriented/c0100/)
+  4. [map structure result](/object-oriented/c0141/)
+  5. [reg/set a object](/object-oriented/c0156/)
+
+### Chapter 21 [syntax](/syntax/)
+
+  1. [multiline styles](/syntax/c0073/)
+
+### Chapter 22 [advanced use cases](/advanced-cases/)
+
+  1. [web scraping example](/advanced-cases/web-scraping/)
+  2. [upcmd doco auto generation](/advanced-cases/upcmd-doc-gen/)
+
+### Chapter 23 [modules](/module/)
+
+  1. [module commands](/module/module-commands/)
+  2. [module config](/module/module-config/)
+  3. [HelloWorld example](/module/0001/)
+  4. [simple vars](/module/0002/)
+  5. [return value](/module/0003/)
+  6. [jailed exec context](/module/0004/)
+  7. [Complex vars](/module/0005/)
+  8. [Complex call layers](/module/0006/)
+  9. [use alias](/module/0007/)
+  10. [moule lock](/module/0008/)
+  11. [module validation](/module/0009/)
+  12. [multi module calls](/module/0010/)
+  13. [module multi vesioning](/module/0011/)
+  14. [max module restriction](/module/f0012/)
+  15. [manage indirect dependencies](/module/0013/)
+
+### Chapter 24 [idea and faq](/ideas_and_faq/)
+
+  1. [mutli-threads/concurrency](/ideas_and_faq/concurrency/)
+  2. [watch and monitoring](/ideas_and_faq/watch/)
+  3. [more funcs support](/ideas_and_faq/modules/)
+  4. [http/rest api support](/ideas_and_faq/http/)
+  5. [cli tools work with](/ideas_and_faq/cli_tools/)
+

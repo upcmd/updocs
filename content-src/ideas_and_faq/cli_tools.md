@@ -20,4 +20,13 @@ Please goolge the example and usage of these commands for details
 * environment variable management and auto load
     * [direnv](https://github.com/direnv/direnv)
     
+* html parser and processing
+    * [pup](https://github.com/ericchiang/pup)
+    
+* json parser
+    * [jq](https://github.com/stedolan/jq)
+    
+* yq (there is already builtin supprt for yaml processing in UPcmd)
+    * [yq](https://github.com/mikefarah/yq)
+    
 .......
