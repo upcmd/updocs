@@ -234,7 +234,6 @@ example:
 
 ```
 
-
 * load the func
 
 ```
