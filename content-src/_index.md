@@ -6,16 +6,20 @@ draft: false
 
 # UPcmd [github source](https://github.com/upcmd/up)
 
+* [release](https://github.com/upcmd/up/releases)
+
 ## User Manual
 
 ### Chapter 1 [installation and usage](/usage/)
 
   1. [command line basics](/usage/cli_usage/)
-  2. [list tasks](/usage/list_tasks/)
-  3. [config yml](/usage/config_yml/)
-  4. [command args](/usage/cli_args/)
-  5. [public and protected tasks](/usage/c0140/)
-  6. [working directory](/usage/c0144/)
+  2. [installation](/usage/installation/)
+  3. [list tasks](/usage/list_tasks/)
+  4. [config yml](/usage/config_yml/)
+  5. [command args](/usage/cli_args/)
+  6. [use upcli docker image](/usage/docker_usage/)
+  7. [public and protected tasks](/usage/c0140/)
+  8. [working directory](/usage/c0144/)
 
 ### Chapter 2 [quick start](/quick-start/)
 
@@ -27,7 +31,8 @@ draft: false
   6. [call func (power up)](/quick-start/c0104/)
   7. [use env var](/quick-start/c0006/)
   8. [syntax variation](/quick-start/c0007/)
-  9. [a little taste of UPcmd](/quick-start/c0151/)
+  9. [how to run the examples](/quick-start/run_examples/)
+  10. [a little taste of UPcmd](/quick-start/c0151/)
 
 ### Chapter 3 [vars](/vars/)
 
@@ -47,11 +52,12 @@ draft: false
   14. [use pure local vars](/vars/c0147/)
   15. [taskScope vars in block](/vars/c0148/)
   16. [probe exisitence of path](/vars/c0154/)
+  17. [use vars in desc](/vars/c0177/)
 
 ### Chapter 4 [call func](/call-func/)
 
   1. [assemble worlflow](/call-func/c0017/)
-  2. [call call as interface](/call-func/c0020/)
+  2. [call func as interface](/call-func/c0020/)
   3. [overriden in callee](/call-func/c0111/)
   4. [multiple layers overriding](/call-func/c0112/)
   5. [return values](/call-func/c0113/)
@@ -107,6 +113,8 @@ draft: false
   1. [register result](/shell-func/c0026/)
   2. [check result](/shell-func/c0041/)
   3. [ignore error](/shell-func/c0052/)
+  4. [handle std err](/shell-func/f0178/)
+  5. [silent the shell execution](/shell-func/c0180/)
 
 ### Chapter 9 [design patterns](/design-patterns/)
 
@@ -115,7 +123,7 @@ draft: false
   3. [data structure](/design-patterns/c0079/)
   4. [modular tasks](/design-patterns/c0080/)
   5. [externalise task def](/design-patterns/c0081/)
-  6. [func and vars](/design-patterns/func_and_vars/)
+  6. [call and vars](/design-patterns/func_and_vars/)
   7. [design patterns](/design-patterns/design_patterns/)
   8. [private var scope](/design-patterns/c0094/)
 
@@ -126,10 +134,13 @@ draft: false
   3. [environment vars](/env-vars/c0046/)
   4. [declare env var](/env-vars/c0048/)
   5. [env vars in scopes](/env-vars/c0049/)
+  6. [virtualEnv cmd](/env-vars/c0193/)
 
 ### Chapter 11 [security](/security/)
 
   1. [builtin en/decryption](/security/c0051/)
+  2. [use env var to encrypt and decrypt](/security/use_envvar_to_encrypt_decrypt/)
+  3. [secure env var](/security/c0197/)
 
 ### Chapter 12 [flow controll](/flow-controll/)
 
@@ -153,6 +164,15 @@ draft: false
   18. [finally steps block](/flow-controll/c0173/)
   19. [conditionally error handling](/flow-controll/c0174/)
   20. [finally/resuce support in task level](/flow-controll/c0175/)
+  21. [final step using block](/flow-controll/c0182/)
+  22. [finally in subtask level](/flow-controll/c0183/)
+  23. [finally in subtask called from block](/flow-controll/c0184/)
+  24. [finally subtask no ignoreError](/flow-controll/f0185/)
+  25. [finally/resuce support in subtask level](/flow-controll/f0186/)
+  26. [complex task finally in sub task](/flow-controll/c0187/)
+  27. [finally/resuce support in subtask level](/flow-controll/f0188/)
+  28. [task finally always emit](/flow-controll/c0189/)
+  29. [finally/resuce support in task level](/flow-controll/c0192/)
 
 ### Chapter 13 [loop](/loop/)
 
@@ -166,6 +186,7 @@ draft: false
   8. [loop with var name](/loop/c0167/)
   9. [loop with range iterator](/loop/c0168/)
   10. [loop and retry example](/loop/c0169/)
+  11. [use dynamic variable in until](/loop/c0181/)
 
 ### Chapter 14 [config organization](/organization/)
 
@@ -188,6 +209,8 @@ draft: false
   8. [break cmd](/cmd-func/c0120/)
   9. [color print](/cmd-func/c0142/)
   10. [template using data file](/cmd-func/c0145/)
+  11. [tmp file](/cmd-func/c0195/)
+  12. [tmp file with dynamic file handler](/cmd-func/c0196/)
 
 ### Chapter 16 [block func](/block-func/)
 
@@ -230,6 +253,9 @@ draft: false
   5. [chained pipein from stdin](/user-interaction/pipe_in/)
   6. [profile with env vars logs](/user-interaction/exec_profile/)
   7. [exec profile example](/user-interaction/exec_profile_eg1/)
+  8. [exec profile with entry task](/user-interaction/exec_profile_with_entry_task/)
+  9. [exec profile with pure env flag](/user-interaction/exec_profile_with_entry_pure_envvars/)
+  10. [exec profile with alternative entry](/user-interaction/exec_profile_with_alternative_entry/)
 
 ### Chapter 20 [object oriented](/object-oriented/)
 
@@ -237,7 +263,9 @@ draft: false
   2. [parse yml to object](/object-oriented/c0074/)
   3. [query](/object-oriented/c0100/)
   4. [map structure result](/object-oriented/c0141/)
-  5. [reg/set a object](/object-oriented/c0156/)
+  5. [reg/set an object](/object-oriented/c0156/)
+  6. [access and register sub object 1](/object-oriented/obj_conversion/)
+  7. [access and register sub object 2](/object-oriented/c0178/)
 
 ### Chapter 21 [syntax](/syntax/)
 
@@ -273,4 +301,8 @@ draft: false
   3. [more funcs support](/ideas_and_faq/modules/)
   4. [http/rest api support](/ideas_and_faq/http/)
   5. [cli tools work with](/ideas_and_faq/cli_tools/)
+
+### Chapter 26 [Error_handlings](/error_handling/)
+
+  1. [last_result pass through block func](/error_handling/c0179/)
 
