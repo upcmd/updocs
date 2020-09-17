@@ -1,5 +1,5 @@
 ---
-title: "access and register sub object"
+title: "access and register sub object 1"
 date: 2020-06-25T22:32:46+11:00
 draft: false
 weight: 1805
@@ -91,13 +91,13 @@ tasks:
 
               You can access, reference to sub element and iterate it using the go template though, for example:
               '{{(index .instances_1. 0).Instances}}' => "i-1234567890"
-            value: '{{(index .elb.LoadBalancerDescriptions 0).Instances |objToYml|ymlToObj|reg instances_1}}'
+            value: '{{(index .elb.LoadBalancerDescriptions 0).Instances |objToYml|ymlToObj|reg "instances_1"}}'
 
           - name: void
             desc: |
               regObj is a template func as short hand to register the chain through object into the cache
               the name of the object is instances_2
-            value: '{{(index .elb.LoadBalancerDescriptions 0).Instances |regObj instances_2}}'
+            value: '{{(index .elb.LoadBalancerDescriptions 0).Instances |regObj "instances_2"}}'
 
           - name: instances_3
             desc: |

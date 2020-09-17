@@ -51,7 +51,7 @@ draft: false
 ### Chapter 4 [call func](/call-func/)
 
   1. [assemble worlflow](/call-func/c0017/)
-  2. [call func as interface](/call-func/c0020/)
+  2. [call call as interface](/call-func/c0020/)
   3. [overriden in callee](/call-func/c0111/)
   4. [multiple layers overriding](/call-func/c0112/)
   5. [return values](/call-func/c0113/)

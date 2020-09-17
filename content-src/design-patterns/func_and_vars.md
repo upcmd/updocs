@@ -1,13 +1,13 @@
 ---
-title: "func and vars"
+title: "call and vars"
 date: 2020-06-25T22:32:46+11:00
 draft: false
 weight: 1001
 ---
 
-### Different ways of use func
+### Different ways of use call
 
-#### func as entry point and local vars are used   
+#### call as entry point and local vars are used   
 
 ```
 
@@ -16,7 +16,7 @@ tasks:
     name: main
     task:
       -
-        func: cmd
+        func: call
         vars:
           a: local-var-a
           b: local-var-b
@@ -44,7 +44,7 @@ The execution runtime for main func will be:
 ```
 
 
-#### func as entry point and local vars override global runtime vars  
+#### call as entry point and local vars override global runtime vars  
 
 ```
 
@@ -60,7 +60,7 @@ tasks:
     name: Say_world
     task:
       -
-        func: cmd
+        func: call
         vars:
           a: local-var-a
           b: local-var-b
@@ -91,7 +91,7 @@ The execution runtime for main func will be:
   c: global-var-c
 ```
 
-#### func as entry point and local vars override global runtime vars
+#### call as entry point and local vars override global runtime vars
 
 In this case, the global vars will override the vars merged from scopes definition, we do not go to details about this further  
 
@@ -103,13 +103,13 @@ scopes:
 vars:
   a: global-var-a
   b: global-var-b
-
+  c: global-var-c
 tasks:
   -
     name: main
     task:
       -
-        func: cmd
+        func: call
         vars:
           a: local-var-a
           b: local-var-b
@@ -140,7 +140,7 @@ The execution runtime for main func will be:
   c: global-var-c
 ```
 
-#### func as method or reusable unit for detailed implementation
+#### call as method or reusable unit for detailed implementation
 
 In this case, we talk about the callee task of "action"
 
@@ -219,7 +219,7 @@ How does it work:
 * note that loca1l-var-* in action func served as default values, if there is same name var, eg var a in global runtime or caller's execution runtime, then it will be overridden by caller  
 
 
-#### func as method or reusable unit in module invoked by external func 
+#### call as method or reusable unit in module invoked by external func 
 
 In this case, we focus on the execution runtime vars in the callee task of "action" in module
 
