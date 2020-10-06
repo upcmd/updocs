@@ -15,23 +15,23 @@ In most of the cases, you will probably just use a global username and password 
 
 In this case, set below values in upconfig.yml
 
-`
+```
 ModRepoUsernameRef: GIT_USERNAME
 ModRepoPasswordRef: GIT_PASSWORD
-`
+```
 
 These two values refer to two env vars: GIT_USERNAME and GIT_PASSWORD
 
 They expect in your CI build environment, there are preset values like below: 
 
-`
+```
 export GIT_USERNAME='something'
 export GIT_PASSWORD='a_password'
-`
+```
 
 ##### Individual credentials for each repo of the module
 
-`
+```
   - repo: https://github.com/upcmd/auth_test_module.git
     alias: hello
     #ref to an env var name
@@ -39,14 +39,14 @@ export GIT_PASSWORD='a_password'
     UsernameRef: AUTH_TEST_MODULE_GIT_USERNAME
     PasswordRef: AUTH_TEST_MODULE_GIT_PASSWORD
     PullPolicy: always
-`
+```
 
 Same as the above, the two values of UsernameRef and PasswordRef are pointing to two env vars:
 
-`
+```
     AUTH_TEST_MODULE_GIT_USERNAME
     AUTH_TEST_MODULE_GIT_PASSWORD
-`
+```
 
 Just set them in your env context
 
@@ -54,7 +54,7 @@ Just set them in your env context
 
 Please ref to the modtest example 14
 
-`
+```
 dvars:
   - name: enc_key
     value: my_enc_key
@@ -78,11 +78,11 @@ dvars:
       - secure
       - envVar
       - v
-`
+```
 
 This shows you could have an already encrypted env var: GITHUB_PASSWORD_ENCRYPTED, which was used in repo:
 
-`
+```
   - repo: https://github.com/upcmd/auth_test_module.git
     alias: hi
     #ref to an env var name
@@ -91,11 +91,11 @@ This shows you could have an already encrypted env var: GITHUB_PASSWORD_ENCRYPTE
     PasswordRef: GITHUB_PASSWORD_ENCRYPTED
     PullPolicy: always
 
-`
+```
 
 ##### Log
 
-`
+```
 Ξ /up-project/up git:(master) ▶ mpullx 0014
 loading [Config]:  ./tests/modtests/0014/upconfig.yml
 Main config:
@@ -215,7 +215,7 @@ Already on 'master'
 Your branch is up to date with 'origin/master'.
  WARN: [config file does not exist] - [use builtin defaults]
 
-`
+```
 
 #### Relevant
 
